@@ -140,7 +140,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
     ALLEGRO_TIMER *timer = NULL;
     timer = al_create_timer (1.0 / dt);
     if (!timer) 
-        fprintf (stderr, "failed to create timer!\n");
+        fprintf (stderr, "Erro ao inicalizar timer\n");
 
     al_register_event_source (event_queue, al_get_display_event_source (display));
     al_register_event_source (event_queue, al_get_timer_event_source (timer));

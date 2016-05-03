@@ -26,7 +26,8 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
         if (current->proj->duration <= 0) {
             Celula *aux = current;
             previous->next = current->next;
-            destroyProjectile (aux);
+            destroyProjectile (aux->proj);
+            destroyCelula (aux);
         }
         else
             movement (current->proj->body, dt);
