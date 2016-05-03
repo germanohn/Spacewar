@@ -1,5 +1,5 @@
 CFLAGS = -Wall -ansi -Wextra -pedantic -O2 --std=c99 -v
-UNAME := $(uname -s)
+UNAME := $(shell uname -s)
 
 ifeq ($(UNAME), Linux)
     LIBS = -lallegro -lallegro_main -lallegro_image -lm
