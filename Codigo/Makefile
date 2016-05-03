@@ -1,7 +1,13 @@
 CFLAGS = -Wall -ansi -Wextra -pedantic -O2 --std=c99  
-LIBS = -lallegro -lallegro_main -lallegro_image -lm
+UNAME := $(shell uname -s)
 
-CC = gcc-5
+ifeq ($(UNAME), Linux) 
+    LIBS = -lallegro -lallegro_main -lallegro_image -lm
+    CC = gcc
+else 
+    LIBS = -lallegro -lallegro_main -lallegro_image -lm
+    CC = gcc-5
+endif
 
 Spacewar: main.o body.o ship.o vector.o projectile.o draw.o simulation.o
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
