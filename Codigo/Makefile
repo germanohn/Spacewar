@@ -4,8 +4,7 @@ UNAME := $(uname -s)
 ifeq ($(UNAME), Linux)
     LIBS = -lallegro -lallegro_main -lallegro_image -lm
     CC = gcc
-endif
-ifeq ($(UNAME), Darwin)
+else
     LIBS = -lallegro -lallegro_main -lallegro_image -lm
     CC = gcc-5
 endif
@@ -32,3 +31,4 @@ test:
 
 clear:
 	rm -f *.o
+	rm -f Spacewar
