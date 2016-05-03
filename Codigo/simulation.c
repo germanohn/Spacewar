@@ -2,10 +2,10 @@
 #include "simulation.h"
 
 void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
-	player1->body->angle += 0.01;
-	player2->body->angle += 0.02;
+    player1->body->angle += 0.01;
+    player2->body->angle += 0.02;
 
-	bodySetForce (player1->body, createVector (0, 0));
+    bodySetForce (player1->body, createVector (0, 0));
     bodySetForce (player2->body, createVector (0, 0));
     bodySetForce (planet, createVector (0, 0));
 
@@ -23,9 +23,12 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
     while (current != NULL) {
         current->proj->duration -= dt;
 
-        if (current->proj->duration <= 0)
+        if (current->proj->duration <= 0) {
+            Celula *aux = current;
             previous->next = current->next;
-		else
+            destroyProjectile (aux);
+        }
+        else
             movement (current->proj->body, dt);
 
         previous = current;
