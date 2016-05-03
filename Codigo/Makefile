@@ -1,10 +1,11 @@
-CFLAGS = -Wall -ansi -Wextra -pedantic -O2 --std=c99  
-UNAME := $(shell uname -s)
+CFLAGS = -Wall -ansi -Wextra -pedantic -O2 --std=c99 -v
+UNAME := $(uname -s)
 
-ifeq ($(UNAME), Linux) 
+ifeq ($(UNAME), Linux)
     LIBS = -lallegro -lallegro_main -lallegro_image -lm
     CC = gcc
-else 
+endif
+ifeq ($(UNAME), Darwin)
     LIBS = -lallegro -lallegro_main -lallegro_image -lm
     CC = gcc-5
 endif
@@ -20,7 +21,7 @@ body.o: body.c vector.h body.h
 
 ship.o: ship.c body.h ship.h
 
-vector.o: vector.c vector.h 
+vector.o: vector.c vector.h
 
 projectile.o: projectile.c projectile.h body.h
 
@@ -30,4 +31,4 @@ test:
 	./Spacewar 100 < Teste.txt
 
 clear:
-	rm -f *.o 
+	rm -f *.o
