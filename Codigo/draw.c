@@ -83,7 +83,7 @@ int drawInit () {
         return -1;
     }
 
-    background = al_load_bitmap ("../Images/space.png");
+    background = al_load_bitmap ("../Images/space.jpg");
     if (!projectile_im) {
         fprintf (stderr, "Falha ao iniciar a imagem de fundo\n");
         al_destroy_display (display);
@@ -140,7 +140,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
     ALLEGRO_TIMER *timer = NULL;
     timer = al_create_timer (1.0 / dt);
     if (!timer) 
-        fprintf (stderr, "failed to create timer!\n");
+        fprintf (stderr, "Erro ao inicalizar timer\n");
 
     al_register_event_source (event_queue, al_get_display_event_source (display));
     al_register_event_source (event_queue, al_get_timer_event_source (timer));
