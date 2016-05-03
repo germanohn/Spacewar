@@ -42,7 +42,7 @@ int drawInit () {
         return -1;
     }
 
-    planet_im = al_load_bitmap ("../Images/planets16/planet_18.png");
+    planet_im = al_load_bitmap ("../Images/planets16/planet_28.png");
     if (!planet_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Planeta\n");
         al_destroy_display (display);
@@ -50,7 +50,7 @@ int drawInit () {
         return -1;
     }
 
-    player1_im = al_load_bitmap ("../Images/milleniumTop.png");
+    player1_im = al_load_bitmap ("../Images/player1.png");
     if (!player1_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Player 1\n");
         al_destroy_display (display);
@@ -60,7 +60,7 @@ int drawInit () {
         return -1;
     }
 
-    player2_im = al_load_bitmap ("../Images/milleniumTop.png");
+    player2_im = al_load_bitmap ("../Images/player2.png");
     if (!player2_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Player 2\n");
         al_destroy_display (display);
@@ -71,7 +71,7 @@ int drawInit () {
         return -1;
     }
 
-    projectile_im = al_load_bitmap ("../Images/milleniumTop.png");
+    projectile_im = al_load_bitmap ("../Images/projectile.png");
     if (!projectile_im) {
         fprintf (stderr, "Falha ao iniciar a imagem dos Projeteis\n");
         al_destroy_display (display);
@@ -139,7 +139,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
     /* Creating Timer */
     ALLEGRO_TIMER *timer = NULL;
     timer = al_create_timer (1.0 / dt);
-    if (!timer) 
+    if (!timer)
         fprintf (stderr, "Erro ao inicalizar timer\n");
 
     al_register_event_source (event_queue, al_get_display_event_source (display));
@@ -166,8 +166,8 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
             drawBodies (player1, player2, head, planet);
             simulation -= dt;
             al_flip_display ();
-        } 
-    
+        }
+
     }
 
      al_destroy_timer (timer);

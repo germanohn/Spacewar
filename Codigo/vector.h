@@ -32,5 +32,7 @@ double vectorDotProduct (Vector *a, Vector *b);
 /* multiplica o vetor a por x */
 void vectorScalarProduct (Vector *a, double x);
 
+/* Calcula o angulo do vector a em relação ao eixo X (1, 0) */
+double vectorAngle (Vector *a);
 
 #endif

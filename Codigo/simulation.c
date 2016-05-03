@@ -2,8 +2,8 @@
 #include "simulation.h"
 
 void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
-    player1->body->angle += 0.01;
-    player2->body->angle += 0.02;
+    player1->body->angle = vectorAngle (player1->body->velocity);
+    player2->body->angle = vectorAngle (player2->body->velocity);
 
     bodySetForce (player1->body, createVector (0, 0));
     bodySetForce (player2->body, createVector (0, 0));
@@ -28,9 +28,12 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
             previous->next = current->next;
             destroyProjectile (aux->proj);
             destroyCelula (aux);
-        }
-        else
+
+        } else {
+            current->proj->body->angle = vectorAngle (current->proj->body->velocity);
             movement (current->proj->body, dt);
+
+        }
 
         previous = current;
         current = current->next;
