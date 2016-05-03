@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "simulation.h"
 
+#define UNIVERSE_H 8e7
+#define UNIVERSE_W 8e7
+
 void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
     player1->body->angle = vectorAngle (player1->body->velocity);
     player2->body->angle = vectorAngle (player2->body->velocity);
@@ -17,6 +20,12 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
     /* Move as naves */
     movement (player1->body, dt);
     movement (player2->body, dt);
+
+    /* Aplica o toroide */
+    if (fabs (player1->body->position->x) > (UNIVERSE_W / 2)) player1->body->position->x *= -1;
+    if (fabs (player1->body->position->y) > (UNIVERSE_H / 2)) player1->body->position->y *= -1;
+    if (fabs (player2->body->position->x) > (UNIVERSE_W / 2)) player2->body->position->x *= -1;
+    if (fabs (player2->body->position->y) > (UNIVERSE_H / 2)) player2->body->position->y *= -1;
 
     /* Diminui o tempo de duração  */
     Celula *current = head->next, *previous = head;
