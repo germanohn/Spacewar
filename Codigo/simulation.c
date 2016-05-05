@@ -6,9 +6,6 @@
 #define UNIVERSE_W 8e7
 
 void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
-    player1->body->angle = vectorAngle (player1->body->velocity);
-    player2->body->angle = vectorAngle (player2->body->velocity);
-
     bodySetForce (player1->body, createVector (0, 0));
     bodySetForce (player2->body, createVector (0, 0));
     bodySetForce (planet, createVector (0, 0));
@@ -40,8 +37,8 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
             destroyCelula (aux);
 
         } else {
-            current->proj->body->angle = vectorAngle (current->proj->body->velocity);
             movement (current->proj->body, dt);
+            current->proj->body->angle = vectorAngle (current->proj->body->velocity);
 
         }
 
