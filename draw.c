@@ -3,9 +3,7 @@
 #include <allegro5/allegro_image.h>
 #include "draw.h"
 #define DISPLAY_H 800
-#define DISPLAY_W 800
-#define UNIVERSE_H 8e7
-#define UNIVERSE_W 8e7
+#define DISPLAY_W (DISPLAY_H * UNIVERSE_RATIO)
 #define SCALE_X (DISPLAY_W / UNIVERSE_W)
 #define SCALE_Y (DISPLAY_H / UNIVERSE_H)
 
@@ -42,7 +40,7 @@ int drawInit () {
         return -1;
     }
 
-    planet_im = al_load_bitmap ("../Images/planets16/planet_28.png");
+    planet_im = al_load_bitmap ("images/planets16/planet_28.png");
     if (!planet_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Planeta\n");
         al_destroy_display (display);
@@ -50,7 +48,7 @@ int drawInit () {
         return -1;
     }
 
-    player1_im = al_load_bitmap ("../Images/player1.png");
+    player1_im = al_load_bitmap ("images/player1.png");
     if (!player1_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Player 1\n");
         al_destroy_display (display);
@@ -60,7 +58,7 @@ int drawInit () {
         return -1;
     }
 
-    player2_im = al_load_bitmap ("../Images/player2.png");
+    player2_im = al_load_bitmap ("images/player2.png");
     if (!player2_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Player 2\n");
         al_destroy_display (display);
@@ -71,7 +69,7 @@ int drawInit () {
         return -1;
     }
 
-    projectile_im = al_load_bitmap ("../Images/projectile.png");
+    projectile_im = al_load_bitmap ("images/projectile.png");
     if (!projectile_im) {
         fprintf (stderr, "Falha ao iniciar a imagem dos Projeteis\n");
         al_destroy_display (display);
@@ -83,7 +81,7 @@ int drawInit () {
         return -1;
     }
 
-    background = al_load_bitmap ("../Images/space.jpg");
+    background = al_load_bitmap ("images/space.jpg");
     if (!projectile_im) {
         fprintf (stderr, "Falha ao iniciar a imagem de fundo\n");
         al_destroy_display (display);
@@ -113,9 +111,11 @@ static void draw (ALLEGRO_BITMAP *image, Body *body) {
     /* Posicoes em escala */
     double sx = body->position->x * SCALE_X + DISPLAY_W / 2.0;
     double sy = body->position->y * SCALE_Y + DISPLAY_H / 2.0;
+
     /* Pixels da imagem */
     double pw = al_get_bitmap_width (image) / 2.0;
     double ph = al_get_bitmap_height (image) / 2.0;
+
     /* Constante de Escala */
     double cteX = body->radius * SCALE_X / pw;
     double cteY = body->radius * SCALE_Y / ph;

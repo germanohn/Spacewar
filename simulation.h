@@ -6,6 +6,10 @@
 #include "ship.h"
 #include "projectile.h"
 
+#define UNIVERSE_RATIO 1.5
+#define UNIVERSE_H 8e7
+#define UNIVERSE_W (UNIVERSE_H * UNIVERSE_RATIO)
+
 /* Computa e aplica as forças nos corpos 1 e 2 */
 void applyForces (Body *body1, Body *body2);
 

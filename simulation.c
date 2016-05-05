@@ -2,9 +2,6 @@
 #include <math.h>
 #include "simulation.h"
 
-#define UNIVERSE_H 8e7
-#define UNIVERSE_W 8e7
-
 // Aplica a força no body1 e body2 (ação e reação)
 void applyForces (Body *body1, Body *body2) {
     if (body1 == NULL || body2 == NULL) return;
