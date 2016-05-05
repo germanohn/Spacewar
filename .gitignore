@@ -1,3 +1,5 @@
 *.o
 .DS_Store
-Codigo/Spacewar
+Spacewar
+Relatorio.aux
+Relatorio.log

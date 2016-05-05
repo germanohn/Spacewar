@@ -28,8 +28,8 @@ draw.o: draw.c simulation.h draw.h
 test:
 	./Spacewar 60 < Samples/Teste.txt
 
-doc:
-	// compilar tex
+doc: Relatorio.tex
+	pdflatex Relatorio.tex
 
 clear:
 	rm -f *.o
