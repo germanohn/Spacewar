@@ -5,7 +5,6 @@
 #define UNIVERSE_H 8e7
 #define UNIVERSE_W 8e7
 
-
 // Aplica a força no body1 e body2 (ação e reação)
 void applyForces (Body *body1, Body *body2) {
     if (body1 == NULL || body2 == NULL) return;
@@ -51,6 +50,7 @@ void movement (Body *body, double dt) {
     destroyVector (a);
 }
 
+/* Atualiza a posição dos corpos */
 void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
     bodySetForce (player1->body, createVector (0, 0));
     bodySetForce (player2->body, createVector (0, 0));
