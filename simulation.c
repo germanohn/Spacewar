@@ -2,7 +2,6 @@
 #include <math.h>
 #include "simulation.h"
 
-// Aplica a força no body1 e body2 (ação e reação)
 void applyForces (Body *body1, Body *body2) {
     if (body1 == NULL || body2 == NULL) return;
 
@@ -13,6 +12,10 @@ void applyForces (Body *body1, Body *body2) {
     /* Cria o vetor force com direção de body1 para body2 */
     Vector *force = createVector (body2->position->x - body1->position->x, body2->position->y - body1->position->y);
     dist = sqrt (vectorDotProduct (force, force));
+
+    /* Se a distância for NaN ou menor que um epsilon = 1e-15, então não aplicamos força pois como não há colisão,
+    dois corpos podem estar numa posição muito próxima (ou na mesma posição). */
+    if (isnan(dist) || fabs (dist) < 1e-15) return;
 
     /* Deixa o vetor force unitário */
     vectorScalarProduct (force, 1.0 / dist);
@@ -28,8 +31,6 @@ void applyForces (Body *body1, Body *body2) {
     destroyVector(force);
 }
 
-// Dado um dt, aplica a força gerando uma acelação (modifica a velocidade)
-// Por fim, ele aplica a velocidade no corpo.
 void movement (Body *body, double dt) {
     if (body == NULL) return;
 
@@ -58,18 +59,15 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
     applyForces (player1->body, planet);
     applyForces (player2->body, planet);
 
-    /* Move as naves */
-    movement (player1->body, dt);
-    movement (player2->body, dt);
-
-    /* Aplica o toroide */
-    if (fabs (player1->body->position->x) > (UNIVERSE_W / 2)) player1->body->position->x *= -1;
-    if (fabs (player1->body->position->y) > (UNIVERSE_H / 2)) player1->body->position->y *= -1;
-    if (fabs (player2->body->position->x) > (UNIVERSE_W / 2)) player2->body->position->x *= -1;
-    if (fabs (player2->body->position->y) > (UNIVERSE_H / 2)) player2->body->position->y *= -1;
-
-    /* Diminui o tempo de duração  */
+    /* Zera as forças sobre os projéteis */
     Celula *current = head->next, *previous = head;
+    while (current != NULL) {
+      bodySetForce (current->proj->body, createVector (0, 0));
+      current = current->next;
+    }
+
+    /* Computa os movimentos dos projéteis */
+    current = head->next, previous = head;
     while (current != NULL) {
         current->proj->duration -= dt;
 
@@ -80,6 +78,16 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
             destroyCelula (aux);
 
         } else {
+            Celula *curForce = current->next;
+            while (curForce != NULL) {
+              applyForces (current->proj->body, curForce->proj->body);
+              curForce = curForce->next;
+            }
+
+            applyForces (current->proj->body, player1->body);
+            applyForces (current->proj->body, player2->body);
+            applyForces (current->proj->body, planet);
+
             movement (current->proj->body, dt);
             current->proj->body->angle = vectorAngle (current->proj->body->velocity);
             if (fabs (current->proj->body->position->x) > (UNIVERSE_W / 2)) current->proj->body->position->x *= -1;
@@ -90,4 +98,14 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
         previous = current;
         current = current->next;
     }
+
+    /* Move as naves */
+    movement (player1->body, dt);
+    movement (player2->body, dt);
+
+    /* Aplica o toroide */
+    if (fabs (player1->body->position->x) > (UNIVERSE_W / 2)) player1->body->position->x *= -1;
+    if (fabs (player1->body->position->y) > (UNIVERSE_H / 2)) player1->body->position->y *= -1;
+    if (fabs (player2->body->position->x) > (UNIVERSE_W / 2)) player2->body->position->x *= -1;
+    if (fabs (player2->body->position->y) > (UNIVERSE_H / 2)) player2->body->position->y *= -1;
 }
