@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include "simulation.h"
 
 #define UNIVERSE_H 8e7

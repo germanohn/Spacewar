@@ -1,4 +1,4 @@
-CFLAGS = -Wall -ansi -Wextra -pedantic -O2 --std=c99 -v
+CFLAGS = -Wall -Wextra -ansi -pedantic -O2 --std=c99
 UNAME := $(shell uname -s)
 
 ifeq ($(UNAME), Linux)
