@@ -33,10 +33,4 @@ void bodySetPosition (Body *body, Vector *newForce);
 void bodySetForce (Body *body, Vector *newForce);
 void bodySetVelocity (Body *body, Vector *newForce);
 
-/* Computa e aplica as forças nos corpos 1 e 2 */
-void applyForces (Body *body1, Body *body2);
-
-/* Move o corpo com a força aplicada */
-void movement (Body *body, double dt);
-
 #endif
