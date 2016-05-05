@@ -1,8 +1,8 @@
 CFLAGS = -Wall -Wextra -ansi -pedantic -O2 --std=c99
 LIBS = -lallegro -lallegro_main -lallegro_image -lm
-UNAME := $(shell uname -s)
+OSNAME := $(shell uname -s)
 
-ifeq ($(UNAME), Linux)
+ifeq ($(OSNAME), Linux)
     CC = gcc
 else
     CC = gcc-5
