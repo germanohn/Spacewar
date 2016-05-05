@@ -15,9 +15,8 @@
 
 \maketitle
 \section{Introdução}
-O documento visa descrever o projeto do jogo Spacewar.
-Allegro ideia e como baixar e como rodar 
-Modelo ideia
+O documento visa descrever o projeto do jogo Spacewar. Allegro ideia e como baixar e como rodar Modelo ideia // TO DO
+
 \section{Classes}
 Fizemos o uso de orientação a objetos usando structs. Definimos algumas classes que serão explicadas abaixo
 cuja documentação de cada função está especificada no cabeçalho das respectiva classe.
@@ -28,7 +27,9 @@ Os atributos implementados nele são: raio (double), peso (double), ângulo em r
 
 \subsection{Projectile}
 Essa é a representação dos projéteis. Os atributos que eles possuem são: corpo (Body) e duração (double).
-Como não há orientação a objetos em C e portanto não há hierarquia, inserimos o corpo como atributo da struct.
+Como não há orientação a objetos em C e portanto não há hierarquia, inserimos o corpo como atributo da struct.\\
+Fizemos uma lista ligada de projéteis para representar os projéteis ativos pois a conseguimos fazer a inserção e remoção em tempo constante ($O(1)$).
+Logo, isso é mais eficiente do que se usássemos um vetor.
 
 \subsection{Ship}
 Essa é a representação das naves. Os atributos que eles possuem são: corpo (Body) e nome (array de chars).
@@ -37,13 +38,16 @@ Como não há orientação a objetos em C e portanto não há hierarquia, inseri
 \subsection{Vector}
 Essa é a representação de um vetor no $V^2$. Os atributos que eles possuem são: x (double) e y (double).
 
+
 \section{MVC}
 Utilizamos a arquitetura de software Model-View-Controller para desenvolvimento do projeto por facilitar o desenvolvimento em módulos.
+
 \subsection{Modelos}
 Procuramos implementar uma orientação a objetos no nosso projeto pois acreditamos que fosse simplificar o desenvolvimento e manutenção do
 código. \\
- O objeto Vector que criamos simplificou muito o manuseio e cálculo de velocidades, acelerações e posições. \\
+O objeto Vector que criamos simplificou muito o manuseio e cálculo de velocidades, acelerações e posições. \\
 O arquivo "simulation.c" é responsável por aplicar a modelagem física, computando as forças e movimentos.
+
 \subsubsection{Gravidade}
 A cada interação zeramos os vetores de força de todos os corpos e depois aplicamos as forças gravitacionais entre:
 \begin{itemize}
@@ -60,8 +64,7 @@ Assumimos que, para o dt dado, o movimento dos corpos é um movimento uniformeme
 A implementação do toróide não interfere na modelagem. // TO DO
 
 \subsection{Visão}
-O framework que usamos para o jogo foi o Allegro que utiliza por trás o
-OpenGL. Escolhemos essa engine por alguns motivos: \\
+O framework que usamos para o jogo foi o Allegro que utiliza por trás o OpenGL. Escolhemos essa engine por alguns motivos: \\
 \begin{itemize}
     \item Ainda é utilizado nos dias de hoje pela comunidade, o que implica em mais suporte;
     \item Há bastante material didático na internet;
@@ -85,26 +88,28 @@ Detectamos que o Allegro apresenta um memory leak constante e pequeno, natural d
 Por ora, não fizemos nenhum trabalho que envolva controladores.
 
 \section{Makefile}
-Criamos um Makefile para o projeto tal que apenas os arquivos que sofreram alguma mudança sejam recompilados. Além disso, fizemos uma especificação para deletar os arquivos .o e outra para executar o programa. \\ 
-Como em nosso grupo haviam usuários de Mac OS e de Linux, fizemos um Makefile que detecta em conta o sistema operacional e compila de acordo.\\
-Incluímos três flags para importar as bibliotecas do Allegro. \\ \\
-Para compilar, utilize o Makefile com: 
+Criamos um Makefile para o projeto tal que apenas os arquivos que sofreram alguma mudança sejam recompilados. Além disso, fizemos uma especificação para deletar os arquivos .o e outra para executar o programa. \\
+Como em nosso grupo haviam usuários de Mac OS e de Linux, fizemos um Makefile que detecta em conta o sistema operacional e compila de acordo.
+Inserimos também uma especificação que gera automaticamente esse relatório, caso o arquivo em .tex seja alterado.
+Em razão do Allegro, tivemos que incluir três flags para importar as bibliotecas necessárias. \\ \\
+Para compilar, utilize o Makefile com:
 \\
 \indent $>\,make$ \\ \\
 Para excluir os arquivos .o:
 \\
-\indent $>\,make\,clear$ \\ \\ 
+\indent $>\,make\,clear$ \\ \\
 Para executar uma entrada de teste pré-definida:
 \\
 \indent $>\,make\,test$
 
 
 \section{Testes}
-Criamos uma pasta "Samples" que contém diversos casos de testes distindos e verificamos, para cada um deles, se houve qualquer vazamento de memória com o Valgrind \\
-Para usar o Valgrind: 
-\\ \\
+Criamos uma pasta "Samples" que contém diversos casos de testes distindos e verificamos, para cada um deles, se houve qualquer vazamento de memória com o Valgrind. \\ \\
+Para usar o Valgrind:
+\\
 \indent $>\,valgrind\,--leak-check=yes\,--track-origins=yes\,./Spacewar\,50000\,<\,Teste.txt$
 
 \section{Considerações Finais}
+TO DO
 
 \end{document}
