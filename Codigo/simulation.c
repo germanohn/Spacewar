@@ -85,6 +85,8 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
         } else {
             movement (current->proj->body, dt);
             current->proj->body->angle = vectorAngle (current->proj->body->velocity);
+            if (fabs (current->proj->body->position->x) > (UNIVERSE_W / 2)) current->proj->body->position->x *= -1;
+            if (fabs (current->proj->body->position->y) > (UNIVERSE_H / 2)) current->proj->body->position->y *= -1;
 
         }
 

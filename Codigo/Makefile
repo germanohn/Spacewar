@@ -26,8 +26,7 @@ projectile.o: projectile.c projectile.h body.h
 draw.o: draw.c simulation.h draw.h
 
 test:
-	./Spacewar 100 < Teste.txt
+	./Spacewar 80 < Teste.txt
 
 clear:
 	rm -f *.o
-	rm -f Spacewar
