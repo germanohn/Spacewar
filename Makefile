@@ -36,3 +36,9 @@ zip: *.c *.h samples/*.txt images/*.* Relatorio.pdf Makefile Spacewar
 
 clear:
 	rm -f *.o
+
+clear_all:
+	rm -f *.o
+	rm -f Spacewar
+	rm -f spacewar.zip
+	rm -f Relatorio.aux Relatorio.out Relatorio.log Relatorio.pdf
