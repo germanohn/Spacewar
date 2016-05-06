@@ -82,7 +82,7 @@ int drawInit () {
     }
 
     background = al_load_bitmap ("images/space.jpg");
-    if (!projectile_im) {
+    if (!background) {
         fprintf (stderr, "Falha ao iniciar a imagem de fundo\n");
         al_destroy_display (display);
         al_destroy_event_queue (event_queue);
