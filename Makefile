@@ -38,7 +38,4 @@ clear:
 	rm -f *.o
 
 clear_all:
-	rm -f *.o
-	rm -f Spacewar
-	rm -f spacewar.zip
-	rm -f Relatorio.aux Relatorio.out Relatorio.log Relatorio.pdf
+	rm -f *.o Spacewar spacewar.zip Relatorio.aux Relatorio.out Relatorio.log Relatorio.pdf
