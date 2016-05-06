@@ -25,11 +25,14 @@ projectile.o: projectile.c projectile.h body.h
 
 draw.o: draw.c simulation.h draw.h
 
-test:
-	./Spacewar 60 < Samples/Teste.txt
+test: Spacewar
+	./Spacewar 60 < samples/Teste.txt
 
 doc: Relatorio.tex
 	pdflatex Relatorio.tex
+
+zip: *.c *.h samples/*.txt images/*.* Relatorio.pdf Makefile Spacewar
+	zip spacewar.zip $^
 
 clear:
 	rm -f *.o

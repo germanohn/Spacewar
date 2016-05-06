@@ -40,7 +40,7 @@ int drawInit () {
         return -1;
     }
 
-    planet_im = al_load_bitmap ("images/planets16/planet_28.png");
+    planet_im = al_load_bitmap ("images/planet.png");
     if (!planet_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Planeta\n");
         al_destroy_display (display);

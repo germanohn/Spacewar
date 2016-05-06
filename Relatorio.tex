@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
 
 \title{Relatório - Fase II}
 \author{
@@ -15,7 +16,7 @@
 
 \maketitle
 \section{Introdução}
-O documento visa descrever o projeto do jogo Spacewar. Assim, baseado na arquitetura de software MVC, queremos neste documento explicar as ideias e implementações 
+O documento visa descrever o projeto do jogo Spacewar. Assim, baseado na arquitetura de software MVC, queremos neste documento explicar as ideias e implementações
 da primeira (modelo físico adotado e funcionamento das estruturas) e segunda parte (parte gráfica e biblioteca Allegro utilizada).
 
 \section{Classes}
@@ -62,7 +63,7 @@ Assumimos que, para o dt dado, o movimento dos corpos é um movimento uniformeme
 \subsubsection{Toróide}
 Como requisitado, modelamos a tela como uma superfície toroidal. Assim, quando um objeto ultrapassa a linha superior, sua posição é alterada para a mesma posição em x
 na linha inferior e vice-versa, e quando um objeto ultrapassa a linha da extremidade direita, sua posição é alterada para a mesma posição em y na linha da extremidade
-esquerda e vice-versa. O vetor velocidade em qualquer um dos quatro casos não é alterado, e o vetor força respeita a modelagem a partir da nova posição do objeto. 
+esquerda e vice-versa. O vetor velocidade em qualquer um dos quatro casos não é alterado, e o vetor força respeita a modelagem a partir da nova posição do objeto.
 Então a modificação efetiva diz respeito apenas à posição do objeto.
 
 \subsection{Visão}
@@ -77,7 +78,7 @@ A parte do código que trata a apresentação na tela foi desenvolvida no arquiv
 \subsection{Allegro}
 \subsubsection{Instalação}
 Para instalar o Allegro, siga as instruções da página oficial: \\ \\
-    $https://wiki.allegro.cc/index.php?title=Getting_Started\#Installing\_Allegro$
+\url{https://wiki.allegro.cc/index.php?title=Getting\_Started#Installing\_Allegro}
 
 \subsubsection{Memory Leak}
 Detectamos que o Allegro apresenta um memory leak constante e pequeno, natural da sua implementação e que não interfere na execução do programa.
@@ -85,19 +86,20 @@ Detectamos que o Allegro apresenta um memory leak constante e pequeno, natural d
 \subsubsection{Funcionamento: Parte Gráfica e Allegro}
 Na segunda parte do projeto desenvolvemos a parte gráfica do jogo. Para isso, dividimos a implementação em duas funções: drawInit () e drawScene ().
 
--drawInit (): Nessa função inicializamos a imagem de cada objeto do sistema (nave1, nave2, projéteis, planeta, background). Para isso, cada objeto foi declarado como
-uma variável ALLEGRO_BITMAP e então cada objeto teve a sua imagem carregada com a função: al_load_bitmap ("imagemDoObjeto.png").
+\begin{itemize}
+  \item drawInit: Nessa função inicializamos a imagem de cada objeto do sistema (nave1, nave2, projéteis, planeta, background). Para isso, cada objeto foi declarado como
+uma variável ALLEGRO\_BITMAP e então cada objeto teve a sua imagem carregada com a função: al\_load\_bitmap ("imagemDoObjeto.png").
 
--drawScene (): Nessa função desenvolvemos a simulação propriamente dita. Para isso, usamos uma ideia muito útil na Allegro chamada eventos. Eventos avisam
-que algo aconteceu no programa. No caso da simulação, isso se torna muito útil, pois queremos saber quando devemos atualizar o sistema e evitar a cada momento 
-estar verificando se algo mudou no programa. Assim, utilizamos *timer (que a cada 1/dt avisa que é preciso atualizar a imagem) como um Event Source, isto é, 
-algo que avisa ao programa que algo aconteceu, e uma Event Queue, lugar onde os eventos (no caso timer) são colocados em uma ordem FIFO, e são removidos quando usados
-pelo programa. Além disso, utilizamos a variável *display, responsável pela amostragem da tela e, por padrão, vale lembrar que a Allegro cria duas imagens de buffer, 
+  \item drawScene: Nessa função desenvolvemos a simulação propriamente dita. Para isso, usamos uma ideia muito útil na Allegro chamada eventos. Eventos avisam
+que algo aconteceu no programa. No caso da simulação, isso se torna muito útil, pois queremos saber quando devemos atualizar o sistema e evitar a cada momento
+estar verificando se algo mudou no programa. Assim, utilizamos um "timer" (que a cada 1/dt avisa que é preciso atualizar a imagem) como um Event Source, isto é,
+uma fonte de eventos que avisa ao programa que algo aconteceu, e uma Event Queue, uma fila onde os eventos (no caso timer) são inseridos, e são removidos quando usados
+pelo programa. Além disso, utilizamos a variável "display", responsável pela amostragem da tela e, por padrão, vale lembrar que a Allegro cria duas imagens de buffer,
 uma que se mostra para o usuário e outra que se constrói a próxima imagem a ser mostrada.
-
-Dada então essa disposição, cada vez que o timer avisa que um novo update deve ser feito, atualiza-se as posições de cada objeto, desenha-se o background, 
-desenha-se os objetos e quando todo o update está pronto, chama-se al_flip_display (), função que faz um swap das imagens do buffer, isto é, transforma a imagem 
-recém montada na nova imagem exibida para o usuário, enquanto o buffer da imagem antes emitida agora será o utilizado para gerar a pŕoxima imagem. 
+\end{itemize}
+Dada então essa disposição, cada vez que o timer avisa que um novo update deve ser feito, atualiza-se as posições de cada objeto, limpa-se a tela, desenha-se o background,
+desenha-se os objetos e quando todo o update está pronto, chama-se a função "al\_flip\_display", função que faz um swap das imagens do buffer, isto é, transforma a imagem
+recém montada na nova imagem exibida para o usuário, enquanto o buffer da imagem antes emitida agora será o utilizado para gerar a pŕoxima imagem.
 
 \subsection{Controladores}
 Por ora, não fizemos nenhum trabalho que envolva controladores.
@@ -105,7 +107,7 @@ Por ora, não fizemos nenhum trabalho que envolva controladores.
 \section{Makefile}
 Criamos um Makefile para o projeto tal que apenas os arquivos que sofreram alguma mudança sejam recompilados. Além disso, fizemos uma especificação para deletar os arquivos .o e outra para executar o programa. \\
 Como em nosso grupo haviam usuários de Mac OS e de Linux, fizemos um Makefile que detecta em conta o sistema operacional e compila de acordo.
-Inserimos também uma especificação que gera automaticamente esse relatório, caso o arquivo em .tex seja alterado.
+Inserimos também uma especificação que gera automaticamente esse relatório, caso o arquivo em .tex seja alterado (make doc) e outra que gera o zip com os arquivos relevantes para entregar no PACA (make zip).
 Em razão do Allegro, tivemos que incluir três flags para importar as bibliotecas necessárias. \\ \\
 Para compilar, utilize o Makefile com:
 \\
@@ -125,7 +127,7 @@ Para usar o Valgrind:
 \indent $>\,valgrind\,--leak-check=yes\,--track-origins=yes\,./Spacewar\,50000\,<\,Teste.txt$
 
 \section{Considerações Finais}
-Em geral, achamos a Allegro uma implementação boa e eficiente da parte gráfica, porém ao rodar o valgrind tivemos alguns problemas de leak de memória referentes a 
-funções desta biblioteca que não conseguimos retirar.
+Em geral, achamos a Allegro uma implementação boa e eficiente da parte gráfica, porém ao rodar o Valgrind tivemos alguns problemas de leak de memória referentes a
+funções desta biblioteca que é possível arrumar.
 
 \end{document}
