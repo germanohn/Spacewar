@@ -65,7 +65,7 @@ Vector** getProjectileVertex (Projectile *proj) {
 void destroyCelula (Celula *cel) {
     if (cel == NULL) return;
     
-    destroyProjectile (cel->proj);
+    //destroyProjectile (cel->proj);
     free (cel);
 }
 
