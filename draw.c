@@ -167,7 +167,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
             break;
         }
         else if (event.type == ALLEGRO_KEY_DOWN) {
-            switch (ev.keyboard.keycode) {
+            switch (event.keyboard.keycode) {
                 // Player 1 (W, A, S, D)
                 case ALLEGRO_KEY_W:
                     keys_1[KEY_UP] = true;
