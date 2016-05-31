@@ -15,6 +15,16 @@ ALLEGRO_BITMAP *projectile_im;
 ALLEGRO_BITMAP *background;
 ALLEGRO_EVENT_QUEUE *event_queue;
 
+int keys_1[4] = {FALSE, FALSE, FALSE , FALSE}
+/*enum P1_KEYS {
+    KEY_W, KEY_S, KEY_A, KEY_D
+};*/
+
+int keys_2[4] = {FALSE, FALSE, FALSE , FALSE}
+enum KEYS {
+    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
+};
+
 
 int drawInit () {
     if (!al_init ()) {
@@ -37,6 +47,13 @@ int drawInit () {
     if (!event_queue) {
         fprintf (stderr, "Falha ao criar fila de eventos.\n");
         al_destroy_display (display);
+        return -1;
+    }
+
+    if (!al_install_keyboard ()) {
+        fprintf (stderr, "Falha ao iniciar o teclado.\n");
+        al_destroy_display (display);
+        al_destroy_event_queue (event_queue);
         return -1;
     }
 
@@ -153,13 +170,49 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
         al_wait_for_event (event_queue, &event);
         if (event.type == ALLEGRO_EVENT_TIMER) {
             redraw = 1;
-        } else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+        }
+        else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
         }
+        else if (event.type == ALLEGRO_KEY_UP) {
+            switch (ev.keyboard.keycode) {
+                // Player 1 (W, A, S, D)
+                case ALLEGRO_KEY_W:
+                    keys_1[KEY_UP] = TRUE;
+                    break;
+                case ALLEGRO_KEY_S:
+                    keys_1[KEY_DOWN] = TRUE;
+                    break;
+                case ALLEGRO_KEY_A:
+                    keys_1[KEY_LEFT] = TRUE;
+                    break;
+                case ALLEGRO_KEY_D:
+                    keys_1[KEY_RIGHT] = TRUE;
+                    break;
+
+                // Player 2 (UP, DOWN, LEFT, RIGHT)
+                case ALLEGRO_KEY_UP:
+                    keys_2[KEY_UP] = TRUE;
+                    break;
+                case ALLEGRO_KEY_DOWN:
+                    keys_2[KEY_DOWN] = TRUE;
+                    break;
+                case ALLEGRO_KEY_LEFT:
+                    keys_2[KEY_LEFT] = TRUE;
+                    break;
+                case ALLEGRO_KEY_RIGHT:
+                    keys_2[KEY_RIGHT] = TRUE;
+                    break;
+                
+            }
+        }
+
         if (redraw && al_is_event_queue_empty (event_queue)) {
             redraw = 0;
 
             al_clear_to_color (al_map_rgb (0, 0, 0));
+            updateKeys (keys_1, player1->body);
+            updateKeys (keys_2, player2->body); 
             updatePositions (dt, player1, player2, head, planet);
             al_draw_bitmap (background, 0, 0 , 0);
 
