@@ -48,9 +48,15 @@ void movement (Body *body, double dt) {
     destroyVector (a);
 }
 
-void updateKeys (int *key, Body *player) {
+void updateKeys (int *key, Body *body) {
     // atualiza o angulo
-    if ( 
+    if (key[KEY_LEFT]) {
+        // aumenta o angulo
+        body->angle += 0.1;
+    } else if (key[KEY_RIGHT]) {
+        body->angle -= 0.1 
+    } 
+
 }
 
 /* Atualiza a posição dos corpos */
