@@ -15,12 +15,12 @@ ALLEGRO_BITMAP *projectile_im;
 ALLEGRO_BITMAP *background;
 ALLEGRO_EVENT_QUEUE *event_queue;
 
-int keys_1[4] = {FALSE, FALSE, FALSE , FALSE}
+int keys_1[4] = {false, false, false , false}
 /*enum P1_KEYS {
     KEY_W, KEY_S, KEY_A, KEY_D
 };*/
 
-int keys_2[4] = {FALSE, FALSE, FALSE , FALSE}
+int keys_2[4] = {false, false, false , false}
 enum KEYS {
     KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 };
@@ -174,34 +174,66 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
         else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
         }
-        else if (event.type == ALLEGRO_KEY_UP) {
+        else if (event.type == ALLEGRO_KEY_DOWN) {
             switch (ev.keyboard.keycode) {
                 // Player 1 (W, A, S, D)
                 case ALLEGRO_KEY_W:
-                    keys_1[KEY_UP] = TRUE;
+                    keys_1[KEY_UP] = true;
                     break;
                 case ALLEGRO_KEY_S:
-                    keys_1[KEY_DOWN] = TRUE;
+                    keys_1[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_A:
-                    keys_1[KEY_LEFT] = TRUE;
+                    keys_1[KEY_LEFT] = true;
                     break;
                 case ALLEGRO_KEY_D:
-                    keys_1[KEY_RIGHT] = TRUE;
+                    keys_1[KEY_RIGHT] = true;
                     break;
 
                 // Player 2 (UP, DOWN, LEFT, RIGHT)
                 case ALLEGRO_KEY_UP:
-                    keys_2[KEY_UP] = TRUE;
+                    keys_2[KEY_UP] = true;
                     break;
                 case ALLEGRO_KEY_DOWN:
-                    keys_2[KEY_DOWN] = TRUE;
+                    keys_2[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_LEFT:
-                    keys_2[KEY_LEFT] = TRUE;
+                    keys_2[KEY_LEFT] = true;
                     break;
                 case ALLEGRO_KEY_RIGHT:
-                    keys_2[KEY_RIGHT] = TRUE;
+                    keys_2[KEY_RIGHT] = true;
+                    break;
+                
+            }
+        }
+        else if (event.type == ALLEGRO_KEY_UP) {
+            switch (ev.keyboard.keycode) {
+                // Player 1 (W, A, S, D)
+                case ALLEGRO_KEY_W:
+                    keys_1[KEY_UP] = false;
+                    break;
+                case ALLEGRO_KEY_S:
+                    keys_1[KEY_DOWN] = false;
+                    break;
+                case ALLEGRO_KEY_A:
+                    keys_1[KEY_LEFT] = false;
+                    break;
+                case ALLEGRO_KEY_D:
+                    keys_1[KEY_RIGHT] = false;
+                    break;
+
+                // Player 2 (UP, DOWN, LEFT, RIGHT)
+                case ALLEGRO_KEY_UP:
+                    keys_2[KEY_UP] = false;
+                    break;
+                case ALLEGRO_KEY_DOWN:
+                    keys_2[KEY_DOWN] = false;
+                    break;
+                case ALLEGRO_KEY_LEFT:
+                    keys_2[KEY_LEFT] = false;
+                    break;
+                case ALLEGRO_KEY_RIGHT:
+                    keys_2[KEY_RIGHT] = false;
                     break;
                 
             }
