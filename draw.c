@@ -15,8 +15,8 @@ ALLEGRO_BITMAP *projectile_im;
 ALLEGRO_BITMAP *background;
 ALLEGRO_EVENT_QUEUE *event_queue;
 
-int keys_1[4] = {false, false, false , false}
-int keys_2[4] = {false, false, false , false}
+int keys_1[4] = {false, false, false , false};
+int keys_2[4] = {false, false, false , false};
 
 int drawInit () {
     if (!al_init ()) {
@@ -199,7 +199,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
             }
         }
         else if (event.type == ALLEGRO_KEY_UP) {
-            switch (ev.keyboard.keycode) {
+            switch (event.keyboard.keycode) {
                 // Player 1 (W, A, S, D)
                 case ALLEGRO_KEY_W:
                     keys_1[KEY_UP] = false;
