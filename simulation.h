@@ -21,10 +21,10 @@ void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Bod
 
 /* Teclas de controle das naves */
 enum KEYS {
-    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
+    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, SHOOT
 };
 
 /* Atualiza o movimento de um corpo de acordo com as teclas pressionada */
-void updateKeys (int *key, Body *body);
+void updateKeys (int *key, Body *body, Celula *head);
 
 #endif

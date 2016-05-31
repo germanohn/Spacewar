@@ -15,8 +15,8 @@ ALLEGRO_BITMAP *projectile_im;
 ALLEGRO_BITMAP *background;
 ALLEGRO_EVENT_QUEUE *event_queue;
 
-int keys_1[4] = {false, false, false , false};
-int keys_2[4] = {false, false, false , false};
+int keys_1[5] = {false, false, false , false, false};
+int keys_2[5] = {false, false, false , false, false};
 
 int drawInit () {
     if (!al_init ()) {
@@ -174,6 +174,11 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
                     keys_1[KEY_UP] = true;
                     break;
                 case ALLEGRO_KEY_S:
+                    if (!keys_1[KEY_DOWN]) {
+                        keys_1[SHOOT] = true;
+                    } else {
+                        keys_1[SHOOT] = false;
+                    }
                     keys_1[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_A:
@@ -188,6 +193,11 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
                     keys_2[KEY_UP] = true;
                     break;
                 case ALLEGRO_KEY_DOWN:
+                    if (!keys_2[KEY_DOWN]) {
+                        keys_2[SHOOT] = true;
+                    } else {
+                        keys_2[SHOOT] = false;
+                    }
                     keys_2[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_LEFT:
@@ -206,6 +216,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
                     keys_1[KEY_UP] = false;
                     break;
                 case ALLEGRO_KEY_S:
+                    keys_1[SHOOT] = false;
                     keys_1[KEY_DOWN] = false;
                     break;
                 case ALLEGRO_KEY_A:
@@ -220,6 +231,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
                     keys_2[KEY_UP] = false;
                     break;
                 case ALLEGRO_KEY_DOWN:
+                    keys_2[SHOOT] = false;
                     keys_2[KEY_DOWN] = false;
                     break;
                 case ALLEGRO_KEY_LEFT:
@@ -235,8 +247,8 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
             redraw = 0;
 
             al_clear_to_color (al_map_rgb (0, 0, 0));
-            updateKeys (keys_1, player1->body);
-            updateKeys (keys_2, player2->body); 
+            updateKeys (keys_1, player1->body, head);
+            updateKeys (keys_2, player2->body, head); 
             updatePositions (dt, player1, player2, head, planet);
             al_draw_bitmap (background, 0, 0 , 0);
 

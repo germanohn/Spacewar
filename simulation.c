@@ -48,19 +48,31 @@ void movement (Body *body, double dt) {
     destroyVector (a);
 }
 
-void updateKeys (int *key, Body *body) {
+void updateKeys (int *key, Body *body, Celula *head) {
     // atualiza o angulo
     if (key[KEY_LEFT]) {
-        // aumenta o angulo
-        body->angle -= 0.05;
+        // diminui o angulo
+        body->angle -= 0.08;
     } else if (key[KEY_RIGHT]) {
-        body->angle += 0.05;
-    } 
-    // acelera
-    else if (key[KEY_UP]) {
-        
+        body->angle += 0.08;
+    } else if (key[KEY_UP]) {
+        // acelera
+        // o vetor velocidade ganha mais um componente na direção da nave   
+        // que será k * (cos0, sen0), tal que k é um constante e (cos0, sen0) 
+        // é o vetor unitário na direção da nave
+        int k = 100, limit = 4.5e3;
+        Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
+        vectorSum (body->velocity, vel);
+        // modulo do vetor body->velocity para verificar se passou do limite de velocidade
+        double mod = sqrt (vectorDotProduct (body->velocity, body->velocity));
+        if (mod > limit) 
+            vectorScalarProduct (body->velocity, (double) limit / mod);
+    } else if (key[SHOOT]) {
+        int k = 5e3;
+        Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
+        Projectile *proj = createProjectile (3e4, 1e1, body->position->x, body->position->y, vel->x, vel->y);        
+        head->next = createCelula (proj, head->next);
     }
-
 }
 
 /* Atualiza a posição dos corpos */

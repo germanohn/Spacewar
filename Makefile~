@@ -29,7 +29,7 @@ test: Spacewar
 	./Spacewar 60 < samples/Teste.txt
 
 play: Spacewar
-	./Spacewar 60 < samples/jogo.txt
+    ./Spacewar 60 < samples/jogo.txt
 
 doc: Relatorio.tex
 	pdflatex Relatorio.tex
