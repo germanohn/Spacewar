@@ -24,4 +24,7 @@ enum KEYS {
     KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 };
 
+/* Atualiza o movimento de um corpo de acordo com as teclas pressionada */
+void updateKeys (int *key, Body *body);
+
 #endif

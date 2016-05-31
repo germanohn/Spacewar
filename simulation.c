@@ -48,14 +48,13 @@ void movement (Body *body, double dt) {
     destroyVector (a);
 }
 
-
 void updateKeys (int *key, Body *body) {
     // atualiza o angulo
     if (key[KEY_LEFT]) {
         // aumenta o angulo
-        body->angle += 0.1;
+        body->angle -= 0.05;
     } else if (key[KEY_RIGHT]) {
-        body->angle -= 0.1;
+        body->angle += 0.05;
     } 
 }
 

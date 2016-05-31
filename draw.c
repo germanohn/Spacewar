@@ -153,6 +153,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
 
     al_register_event_source (event_queue, al_get_display_event_source (display));
     al_register_event_source (event_queue, al_get_timer_event_source (timer));
+    al_register_event_source (event_queue, al_get_keyboard_event_source ());
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_flip_display ();
     al_start_timer (timer);
@@ -166,7 +167,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
         else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
         }
-        else if (event.type == ALLEGRO_KEY_DOWN) {
+        else if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
             switch (event.keyboard.keycode) {
                 // Player 1 (W, A, S, D)
                 case ALLEGRO_KEY_W:
@@ -198,7 +199,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
                 
             }
         }
-        else if (event.type == ALLEGRO_KEY_UP) {
+        else if (event.type == ALLEGRO_EVENT_KEY_UP) {
             switch (event.keyboard.keycode) {
                 // Player 1 (W, A, S, D)
                 case ALLEGRO_KEY_W:
@@ -230,7 +231,6 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
                 
             }
         }
-
         if (redraw && al_is_event_queue_empty (event_queue)) {
             redraw = 0;
 
@@ -246,7 +246,6 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
         }
 
     }
-
-     al_destroy_timer (timer);
+    al_destroy_timer (timer);
     destroyScene ();
 }
