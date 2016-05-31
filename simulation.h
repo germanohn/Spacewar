@@ -10,6 +10,10 @@
 #define UNIVERSE_H 8e7
 #define UNIVERSE_W (UNIVERSE_H * UNIVERSE_RATIO)
 
+enum KEYS {
+    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT;
+};
+
 /* Computa e aplica as forças nos corpos 1 e 2 */
 void applyForces (Body *body1, Body *body2);
 

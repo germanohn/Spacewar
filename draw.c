@@ -16,15 +16,7 @@ ALLEGRO_BITMAP *background;
 ALLEGRO_EVENT_QUEUE *event_queue;
 
 int keys_1[4] = {false, false, false , false}
-/*enum P1_KEYS {
-    KEY_W, KEY_S, KEY_A, KEY_D
-};*/
-
 int keys_2[4] = {false, false, false , false}
-enum KEYS {
-    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
-};
-
 
 int drawInit () {
     if (!al_init ()) {

@@ -48,6 +48,11 @@ void movement (Body *body, double dt) {
     destroyVector (a);
 }
 
+void updateKeys (int *key, Body *player) {
+    // atualiza o angulo
+    if ( 
+}
+
 /* Atualiza a posição dos corpos */
 void updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
     bodySetForce (player1->body, createVector (0, 0));
