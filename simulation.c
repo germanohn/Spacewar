@@ -56,6 +56,11 @@ void updateKeys (int *key, Body *body) {
     } else if (key[KEY_RIGHT]) {
         body->angle += 0.05;
     } 
+    // acelera
+    else if (key[KEY_UP]) {
+        
+    }
+
 }
 
 /* Atualiza a posição dos corpos */
