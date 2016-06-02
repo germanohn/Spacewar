@@ -21,7 +21,7 @@ typedef struct ship_struct {
 
 /* construtor e descontrutor do ship */
 Ship* createShip (char *name, double x, double y, double vx, double vy, double weight);
-Vector** getShipVertex (Ship *ship);
+
 void destroyShip (Ship *ship);
 
 #endif

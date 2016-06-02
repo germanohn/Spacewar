@@ -34,6 +34,4 @@ Celula *createCelula (Projectile *proj, Celula *prox);
 void destroyCelula (Celula *cel);
 void destroyAllCelulas (Celula *cel);
 
-Vector** getProjectileVertex (Projectile *proj);
-
 #endif
