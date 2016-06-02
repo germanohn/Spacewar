@@ -206,7 +206,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
                 case ALLEGRO_KEY_RIGHT:
                     keys_2[KEY_RIGHT] = true;
                     break;
-                
+
             }
         }
         else if (event.type == ALLEGRO_EVENT_KEY_UP) {
@@ -240,7 +240,7 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
                 case ALLEGRO_KEY_RIGHT:
                     keys_2[KEY_RIGHT] = false;
                     break;
-                
+
             }
         }
         if (redraw && al_is_event_queue_empty (event_queue)) {
@@ -248,13 +248,16 @@ void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celu
 
             al_clear_to_color (al_map_rgb (0, 0, 0));
             updateKeys (keys_1, player1->body, head);
-            updateKeys (keys_2, player2->body, head); 
-            updatePositions (dt, player1, player2, head, planet);
+            updateKeys (keys_2, player2->body, head);
+            int endGame = updatePositions (dt, player1, player2, head, planet);
             al_draw_bitmap (background, 0, 0 , 0);
 
             drawBodies (player1, player2, head, planet);
             simulation -= dt;
             al_flip_display ();
+
+            if (endGame)
+              break;
         }
 
     }
