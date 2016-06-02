@@ -65,8 +65,8 @@ Celula *projectileDestroyed (Celula *cel) {
 int willColide (Body *a, Body *b) {
   double deltaX = a->position->x - b->position->x;
   double deltaY = a->position->y - b->position->y;
-
-  return sqrt(deltaX * deltaX + deltaY * deltaY) < (a->radius + b->radius - 1.5e6);
+  //printf ("deltaX %lf deltaY %lf a->radius %lf b->radius", deltaX, deltaY, a->radius, b->radius);
+  return sqrt(deltaX * deltaX + deltaY * deltaY) < (a->radius + b->radius);
 }
 
 int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {

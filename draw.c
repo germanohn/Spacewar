@@ -173,7 +173,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                 case ALLEGRO_KEY_W:
                     keys_1[KEY_UP] = true;
                     break;
-                case ALLEGRO_KEY_S:
+                case ALLEGRO_KEY_TAB: // ALLEGRO_KEY_S:
                     keys_1[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_A:
@@ -187,7 +187,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                 case ALLEGRO_KEY_UP:
                     keys_2[KEY_UP] = true;
                     break;
-                case ALLEGRO_KEY_DOWN:
+                case ALLEGRO_KEY_COMMA: // ALLEGRO_KEY_DOWN:
                     keys_2[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_LEFT:
@@ -205,7 +205,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                 case ALLEGRO_KEY_W:
                     keys_1[KEY_UP] = false;
                     break;
-                case ALLEGRO_KEY_S:
+                case ALLEGRO_KEY_TAB:
                     keys_1[KEY_DOWN] = false;
                     break;
                 case ALLEGRO_KEY_A:
@@ -219,7 +219,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                 case ALLEGRO_KEY_UP:
                     keys_2[KEY_UP] = false;
                     break;
-                case ALLEGRO_KEY_DOWN:
+                case ALLEGRO_KEY_COMMA:
                     keys_2[KEY_DOWN] = false;
                     break;
                 case ALLEGRO_KEY_LEFT:
