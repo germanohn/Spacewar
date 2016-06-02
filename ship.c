@@ -3,12 +3,12 @@
 #include "ship.h"
 
 // Cria um objeto Ship
-Ship* createShip (char *name, double x, double y, double vx, double vy, double weight) {
+Ship* createShip (char *name, double radius, double weight, double x, double y, double vx, double v) {
     Ship* ship = malloc (sizeof (Ship));
 
     if (ship != NULL) {
         ship->name = name;
-        ship->body = createBody (1.6e6, weight, x, y, vx, vy);
+        ship->body = createBody (radius, weight, x, y, vx, vy);
     }
     
     return ship;

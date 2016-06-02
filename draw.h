@@ -22,7 +22,7 @@
 int drawInit ();
 
 /* Inicia o desenho do jogo */
-void drawScene (double dt, double simulation, Ship *player1, Ship *player2, Celula *head, Body *planet);
+void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet);
 
 
 #endif
