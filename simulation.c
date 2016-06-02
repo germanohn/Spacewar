@@ -53,28 +53,23 @@ Celula *projectileDestroyed (Celula *cel) {
     if (cel == NULL) return NULL;
 
     // celula a ser destruida
-    Celula *lixo = cel->prox;
+    Celula *lixo = cel->next;
 
     // nova celula que cel ira apontar
-    cel->prox = cel->prox->prox;
+    cel->next = cel->next->next;
     destroyCelula (lixo);
 
-    return cel->prox;
-}
-
-
-void playersDidColide () {
-
+    return cel->next;
 }
 
 int willColide (Body *a, Body *b) {
   double deltaX = a->position->x - b->position->x;
   double deltaY = a->position->y - b->position->y;
 
-  return sqrt(deltaX * deltaX + deltaY * deltaY) <= (a->radius + b->radius);
+  return sqrt(deltaX * deltaX + deltaY * deltaY) < (a->radius + b->radius - 1.5e6);
 }
 
-int verifyColission () {
+int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
   if (willColide (player1->body, planet) ||         // Player 1 <> Planeta
       willColide (player2->body, planet) ||         // Player 2 <> Planeta
       willColide (player1->body, player2->body)) {  // Player 1 <> Player 2
@@ -85,7 +80,7 @@ int verifyColission () {
   Celula *current = head->next, *previous = head;
   while (current != NULL) {
       if (willColide (current->proj->body, player1->body) ||
-          willColide (current->proj->body, player2->body))
+          willColide (current->proj->body, player2->body)) {
         return 1;
 
       }
@@ -93,8 +88,8 @@ int verifyColission () {
       if (willColide (current->proj->body, planet)) {
         current = projectileDestroyed (previous);
         continue;
-      }
 
+      }
       int currentDestroyed = 0;
       Celula *innerCurrent = current->next, *innerPrevious = current;
       while (innerCurrent != NULL) {
@@ -130,7 +125,7 @@ void updateKeys (int *key, Body *body, Celula *head) {
         // o vetor velocidade ganha mais um componente na direção da nave
         // que será k * (cos0, sen0), tal que k é um constante e (cos0, sen0)
         // é o vetor unitário na direção da nave
-        int k = 100, limit = 5e3;
+        int k = 100, limit = 4.5e3;
         Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
         vectorSum (body->velocity, vel);
         // modulo do vetor body->velocity para verificar se passou do limite de velocidade
@@ -139,10 +134,15 @@ void updateKeys (int *key, Body *body, Celula *head) {
             vectorScalarProduct (body->velocity, (double) limit / mod);
     } else if (key[KEY_DOWN]) {
         int k = 5e3;
+        double angle = vectorAngle (body->velocity);
         Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
-        Projectile *proj = createProjectile (3e4, 1e1, body->position->x, body->position->y, vel->x, vel->y);
+
+        Projectile *proj = createProjectile (3e4, 1e09,
+          body->position->x + cos (body->angle) * (body->radius + 1e6),
+          body->position->y + sin (body->angle) * (body->radius + 1e6),
+          vel->x, vel->y);
         head->next = createCelula (proj, head->next);
-        key[KEY_DOWN] = false;
+        key[KEY_DOWN] = 0;
     }
 }
 
@@ -208,5 +208,5 @@ int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body
     if (fabs (player2->body->position->y) > (UNIVERSE_H / 2)) player2->body->position->y *= -1;
 
     /* Verifica colisão */
-    return verifyColission ();
+    return verifyColission (player1, player2, planet, head);
 }

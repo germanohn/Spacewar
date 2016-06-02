@@ -20,7 +20,7 @@ typedef struct ship_struct {
 } Ship;
 
 /* construtor e descontrutor do ship */
-Ship* createShip (char *name, double x, double y, double vx, double vy, double weight);
+Ship* createShip (char *name, double radius, double weight, double x, double y, double vx, double vy);
 
 void destroyShip (Ship *ship);
 

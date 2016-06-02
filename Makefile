@@ -25,11 +25,8 @@ projectile.o: projectile.c projectile.h body.h
 
 draw.o: draw.c simulation.h draw.h
 
-test: Spacewar
-	./Spacewar 60 < samples/Teste.txt
-
 play: Spacewar
-	./Spacewar 60 < samples/jogo.txt
+	./Spacewar 60
 
 doc: Relatorio.tex
 	pdflatex Relatorio.tex

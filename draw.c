@@ -158,7 +158,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
     al_flip_display ();
     al_start_timer (timer);
 
-    while (simulation > 0) {
+    while (true) {
         ALLEGRO_EVENT event;
         al_wait_for_event (event_queue, &event);
         if (event.type == ALLEGRO_EVENT_TIMER) {
@@ -241,7 +241,6 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
             al_draw_bitmap (background, 0, 0 , 0);
 
             drawBodies (player1, player2, head, planet);
-            simulation -= dt;
             al_flip_display ();
 
             if (endGame)

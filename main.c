@@ -20,7 +20,7 @@
 
 #define DEBUG 0
 
-void static init (Body *planet, Ship *player1, Ship *player2) {
+void initObjects (Body *planet, Ship *player1, Ship *player2) {
     planet = createBody (9e06, 6.02e24, 0, 0, 0, 0);
     player1 = createShip ("Nave1", 1.6e6, 7.4e04, 3.5786e07, 0, 0, 0);
     player2 = createShip ("Nave2", 1.6e6, 7.4e04, -3.5786e07, 0, 0, 0);
@@ -30,16 +30,15 @@ int main (int argc, char **argv) {
     if (argc != 2)
         fprintf (stderr, "errô\n");
 
-    double simulation;
-    int j;
     double dt = strtod (argv[1], NULL);
 
-    Body *planet;
-    Ship *player1;
-    Ship *player2;
-    Celula *head = createCelula (NULL, NULL);
+    Body *planet  = createBody (9e06, 0, 0, 0, 0, 0);
+    Ship *player1 = createShip ("Nave1", 1.6e6, 7.4e04, 3.5786e07, 0, 0, 0);
+    Ship *player2 = createShip ("Nave2", 1.6e6, 7.4e04, -3.5786e07, 0, 0, 0);
+    Celula *head  = createCelula (NULL, NULL);
 
-    if (drawInit () == -1) return -1;
+    initObjects (planet, player1, player2);
+    if (planet == NULL || player1 == NULL || player2 == NULL || drawInit () == -1) return -1;
     drawScene (dt, player1, player2, head, planet);
 
     destroyBody (planet);
