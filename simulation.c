@@ -87,6 +87,7 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
 
         if (willColide (current->proj->body, planet)) {
             current = projectileDestroyed (previous);
+            projectileRemoved ();
             continue;
 
         }
@@ -96,6 +97,8 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
             if (willColide (current->proj->body, innerCurrent->proj->body)) {
                 innerCurrent = projectileDestroyed (innerPrevious);
                 current = projectileDestroyed (previous);
+                projectileRemoved ();
+                projectileRemoved ();
                 currentDestroyed = 1;
                 break;
             }
@@ -142,6 +145,7 @@ void updateKeys (int *key, Body *body, Celula *head) {
                 vel->x, vel->y);
         head->next = createCelula (proj, head->next);
         key[KEY_DOWN] = 0;
+        projectileAdded ();
     }
 }
 
@@ -173,6 +177,7 @@ int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body
             previous->next = current->next;
             destroyProjectile (aux->proj);
             destroyCelula (aux);
+            projectileRemoved ();
 
         } else {
             Celula *curForce = current->next;
