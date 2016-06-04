@@ -35,4 +35,10 @@ void vectorScalarProduct (Vector *a, double x);
 /* Calcula o angulo do vector a em relação ao eixo X (1, 0) */
 double vectorAngle (Vector *a);
 
+/* Atribui novos valores ao vetor */
+void vectorSetValue (Vector *v, double x, double y);
+
+void vectorCount ();
+
+
 #endif

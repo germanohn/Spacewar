@@ -56,7 +56,7 @@ Celula *projectileDestroyed (Celula *cel) {
     Celula *lixo = cel->next;
 
     // nova celula que cel ira apontar
-    cel->next = cel->next->next;
+    cel->next = lixo->next;
     destroyCelula (lixo);
 
     return cel->next;
@@ -135,6 +135,9 @@ void updateKeys (int *key, Body *body, Celula *head) {
         double mod = sqrt (vectorDotProduct (body->velocity, body->velocity));
         if (mod > limit)
             vectorScalarProduct (body->velocity, (double) limit / mod);
+
+        destroyVector (vel);
+
     } else if (key[KEY_DOWN]) {
         int k = 5e3;
         Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
@@ -146,14 +149,16 @@ void updateKeys (int *key, Body *body, Celula *head) {
         head->next = createCelula (proj, head->next);
         key[KEY_DOWN] = 0;
         projectileAdded ();
+
+        destroyVector (vel);
     }
 }
 
 /* Atualiza a posição dos corpos */
 int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
-    bodySetForce (player1->body, createVector (0, 0));
-    bodySetForce (player2->body, createVector (0, 0));
-    bodySetForce (planet, createVector (0, 0));
+    vectorSetValue (player1->body->force, 0, 0);
+    vectorSetValue (player2->body->force, 0, 0);
+    vectorSetValue (planet->force, 0, 0);
 
     /* Computa as forcas */
     applyForces (player1->body, player2->body);
@@ -163,7 +168,7 @@ int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body
     /* Zera as forças sobre os projéteis */
     Celula *current = head->next, *previous = head;
     while (current != NULL) {
-        bodySetForce (current->proj->body, createVector (0, 0));
+        vectorSetValue (current->proj->body->force, 0, 0);
         current = current->next;
     }
 
@@ -175,7 +180,6 @@ int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body
         if (current->proj->duration <= 0) {
             Celula *aux = current;
             previous->next = current->next;
-            destroyProjectile (aux->proj);
             destroyCelula (aux);
             projectileRemoved ();
 
