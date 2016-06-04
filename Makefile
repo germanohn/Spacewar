@@ -31,7 +31,7 @@ play: Spacewar
 doc: Relatorio.tex
 	pdflatex Relatorio.tex
 
-zip: *.c *.h samples/*.txt images/*.* Relatorio.pdf Makefile Spacewar
+zip: *.c *.h images/*.* Relatorio.pdf Makefile Spacewar
 	zip spacewar.zip $^
 
 clear:
