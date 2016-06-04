@@ -66,6 +66,9 @@ na linha inferior e vice-versa, e quando um objeto ultrapassa a linha da extremi
 esquerda e vice-versa. O vetor velocidade em qualquer um dos quatro casos não é alterado, e o vetor força respeita a modelagem a partir da nova posição do objeto.
 Então a modificação efetiva diz respeito apenas à posição do objeto.
 
+\subsubsection{Colisäo}
+Para detectar as colisões entre os corpos, determinamos, para cada um, uma circunferência circunscrita no corpo. Dessa maneira, cada vez que atualizamos as posicões dos objetos verificamos se houve colisão, ou seja, se a distância entre eles é menor que a soma dos respectivos raios.
+
 \subsection{Visão}
 O framework que usamos para o jogo foi o Allegro que utiliza por trás o OpenGL. Escolhemos essa engine por alguns motivos: \\
 \begin{itemize}
@@ -102,7 +105,8 @@ desenha-se os objetos e quando todo o update está pronto, chama-se a função "
 recém montada na nova imagem exibida para o usuário, enquanto o buffer da imagem antes emitida agora será o utilizado para gerar a pŕoxima imagem.
 
 \subsection{Controladores}
-Por ora, não fizemos nenhum trabalho que envolva controladores.
+Para fazer o controle das naves, usamos a leitura do teclado fornecida pela biblioteca do Allegro e integramos esse input na event queue. Para cada nave, temos um vetor de booleanos que representa as teclas de movimento. Cada vez que uma tecla for pressionada o elemento do vetor correspondente recebe valor "true" asssim quando executarmos a funçäo "UpdateKeys", a açäo a qual a tecla corresponde será executada. \\
+Há uma difrença na implementaçäo da criaçäo dos progéteis. Para conseguirmos atirar um progétil a cada vez que clicamos atribuimos "true" para a variável apenas na transição da tecla do estado não pressionado para o pressionado. 
 
 \section{Makefile}
 Criamos um Makefile para o projeto tal que apenas os arquivos que sofreram alguma mudança sejam recompilados. Além disso, fizemos uma especificação para deletar os arquivos .o e outra para executar o programa. \\
@@ -115,9 +119,9 @@ Para compilar, utilize o Makefile com:
 Para excluir os arquivos .o:
 \\
 \indent $>\,make\,clear$ \\ \\
-Para executar uma entrada de teste pré-definida:
+Para executar com um dt pré-definida:
 \\
-\indent $>\,make\,test$
+\indent $>\,make\,play$
 
 
 \section{Testes}
@@ -128,6 +132,8 @@ Para usar o Valgrind:
 
 \section{Considerações Finais}
 Em geral, achamos a Allegro uma implementação boa e eficiente da parte gráfica, porém ao rodar o Valgrind tivemos alguns problemas de leak de memória referentes a
-funções desta biblioteca que é possível arrumar.
+funções desta biblioteca que é possível arrumar. \\
+\\
+Para essa fase retiramos a entrada de informações pela entrada padrão, as informações necessárias atribuimos no próprio código.
 
 \end{document}
