@@ -209,7 +209,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
         ou para ambos conforme o caso */
         else if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
             switch (event.keyboard.keycode) {
-                // Player 1 (W, A, S, D)
+                // Player 1 (W, A, TAB, D)
                 case ALLEGRO_KEY_W:
                     keys_1[KEY_UP] = true;
                     break;
@@ -223,7 +223,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                     keys_1[KEY_RIGHT] = true;
                     break;
 
-                // Player 2 (UP, DOWN, LEFT, RIGHT)
+                // Player 2 (UP, DOWN, COMMA, RIGHT)
                 case ALLEGRO_KEY_UP:
                     keys_2[KEY_UP] = true;
                     break;
@@ -244,7 +244,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
         ou para ambos conforme o caso. */
         else if (event.type == ALLEGRO_EVENT_KEY_UP) {
             switch (event.keyboard.keycode) {
-                // Player 1 (W, A, S, D)
+                // Player 1 (W, A, TAB, D)
                 case ALLEGRO_KEY_W:
                     keys_1[KEY_UP] = false;
                     break;
@@ -258,7 +258,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                     keys_1[KEY_RIGHT] = false;
                     break;
 
-                // Player 2 (UP, DOWN, LEFT, RIGHT)
+                // Player 2 (UP, DOWN, COMMA, RIGHT)
                 case ALLEGRO_KEY_UP:
                     keys_2[KEY_UP] = false;
                     break;
