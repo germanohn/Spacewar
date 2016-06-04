@@ -24,5 +24,10 @@ int drawInit ();
 /* Inicia o desenho do jogo */
 void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet);
 
+/* Projetil adicionado */
+void projectileAdded ();
+
+/* Projetil removido */
+void projectileRemoved ();
 
 #endif
