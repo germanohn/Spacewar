@@ -6,7 +6,6 @@
 #define DISPLAY_W (DISPLAY_H * UNIVERSE_RATIO)
 #define SCALE_X (DISPLAY_W / UNIVERSE_W)
 #define SCALE_Y (DISPLAY_H / UNIVERSE_H)
-#define MAX_PROJECTILES 10
 
 ALLEGRO_DISPLAY *display;
 ALLEGRO_BITMAP *planet_im;
@@ -16,18 +15,8 @@ ALLEGRO_BITMAP *projectile_im;
 ALLEGRO_BITMAP *background;
 ALLEGRO_EVENT_QUEUE *event_queue;
 
-int NUM_PROJECTILES;
-
 int keys_1[4] = {false, false, false, false};
 int keys_2[4] = {false, false, false, false};
-
-void projectileAdded () {
-  NUM_PROJECTILES++;
-}
-
-void projectileRemoved () {
-  NUM_PROJECTILES--;
-}
 
 int drawInit () {
     if (!al_init ()) {
@@ -186,8 +175,8 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                 case ALLEGRO_KEY_W:
                     keys_1[KEY_UP] = true;
                     break;
-                case ALLEGRO_KEY_TAB: // ALLEGRO_KEY_S:
-                    if (NUM_PROJECTILES < MAX_PROJECTILES) keys_1[KEY_DOWN] = true;
+                case ALLEGRO_KEY_TAB:
+                    keys_1[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_A:
                     keys_1[KEY_LEFT] = true;
@@ -200,8 +189,8 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                 case ALLEGRO_KEY_UP:
                     keys_2[KEY_UP] = true;
                     break;
-                case ALLEGRO_KEY_COMMA: // ALLEGRO_KEY_DOWN:
-                    if (NUM_PROJECTILES < MAX_PROJECTILES) keys_2[KEY_DOWN] = true;
+                case ALLEGRO_KEY_COMMA:
+                    keys_2[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_LEFT:
                     keys_2[KEY_LEFT] = true;
