@@ -27,36 +27,3 @@ void destroyBody (Body *body) {
     destroyVector (body->velocity);
     free (body);
 }
-
-// Setter da posição. Se houver uma anterior, destroi.
-void bodySetPosition (Body *body, Vector *newPosition) {
-    if (body == NULL) return;
-
-    if (body->position != NULL) {
-        destroyVector (body->position);
-    }
-
-    body->position = newPosition;
-}
-
-// Setter da força. Se houver uma anterior, destroi.
-void bodySetForce (Body *body, Vector *newForce) {
-    if (body == NULL) return;
-
-    if (body->force != NULL) {
-        destroyVector (body->force);
-    }
-
-    body->force = newForce;
-}
-
-// Setter da velocidade. Se houver uma anterior, destroi.
-void bodySetVelocity (Body *body, Vector *newVelocity) {
-    if (body == NULL) return;
-
-    if (body->velocity != NULL) {
-        destroyVector (body->velocity);
-    }
-
-    body->velocity = newVelocity;
-}

@@ -51,3 +51,9 @@ double vectorAngle (Vector *a) {
   if (a->x == 0 && a->y == 0) return 0;
   return atan2 (a->y, a->x);
 }
+
+/* Atribui novos valores ao vetor */
+void vectorSetValue (Vector *v, double x, double y) {
+  v->x = x;
+  v->y = y;
+}

@@ -25,5 +25,10 @@ int drawInit ();
 /* Função que controla a dinâmica da cena durante a simulação */
 void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet);
 
+/* Projetil adicionado */
+void projectileAdded ();
+
+/* Projetil removido */
+void projectileRemoved ();
 
 #endif

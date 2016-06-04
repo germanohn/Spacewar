@@ -28,9 +28,4 @@ typedef struct body_struct {
 Body* createBody (double radius, double weight, double x, double y, double vx, double vy);
 void destroyBody (Body *body);
 
-/* Setters */
-void bodySetPosition (Body *body, Vector *newForce);
-void bodySetForce (Body *body, Vector *newForce);
-void bodySetVelocity (Body *body, Vector *newForce);
-
 #endif

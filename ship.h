@@ -19,9 +19,10 @@ typedef struct ship_struct {
     Body *body;
 } Ship;
 
-/* construtor e descontrutor do ship */
+/* construtor do ship */
 Ship* createShip (char *name, double radius, double weight, double x, double y, double vx, double vy);
 
+/* descontrutor do ship */
 void destroyShip (Ship *ship);
 
 #endif
