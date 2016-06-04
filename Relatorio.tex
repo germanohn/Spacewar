@@ -106,7 +106,7 @@ recém montada na nova imagem exibida para o usuário, enquanto o buffer da imag
 
 \subsection{Controladores}
 Para fazer o controle das naves, usamos a leitura do teclado fornecida pela biblioteca do Allegro e integramos esse input na event queue. Para cada nave, temos um vetor de booleanos que representa as teclas de movimento. Cada vez que uma tecla for pressionada o elemento do vetor correspondente recebe valor "true" asssim quando executarmos a funçäo "UpdateKeys", a açäo a qual a tecla corresponde será executada. \\
-Há uma difrença na implementaçäo da criaçäo dos progéteis. Para conseguirmos atirar um progétil a cada vez que clicamos atribuimos "true" para a variável apenas na transição da tecla do estado não pressionado para o pressionado. 
+Há uma difrença na implementaçäo da criaçäo dos progéteis. Para conseguirmos atirar um progétil a cada vez que clicamos atribuimos "true" para a variável apenas na transição da tecla do estado não pressionado para o pressionado.
 
 \section{Makefile}
 Criamos um Makefile para o projeto tal que apenas os arquivos que sofreram alguma mudança sejam recompilados. Além disso, fizemos uma especificação para deletar os arquivos .o e outra para executar o programa. \\
@@ -125,16 +125,16 @@ Para executar com um dt pré-definida:
 
 
 \section{Testes}
-Criamos uma pasta "Samples" que contém diversos casos de testes distindos e verificamos, para cada um deles, se houve qualquer vazamento de memória com o Valgrind. \\ \\
+Utilizamos o Valgrind para verificar se houve vazamento de memória. \\ \\
 Para usar o Valgrind:
 \\
 \indent $>\,valgrind\,--leak-check=yes\,--track-origins=yes\,./Spacewar\,50000$
 
 \section{Considerações Finais}
-Em geral, achamos a Allegro uma implementação boa e eficiente da parte gráfica, porém ao rodar o Valgrind tivemos alguns problemas de leak de memória referentes a
-funções desta biblioteca que é possível arrumar. \\
+Em geral, achamos a Allegro uma implementação boa e eficiente da parte gráfica, porém ao rodar o Valgrind tivemos alguns problemas de vazamento de memória referentes a
+funções desta biblioteca que não é possível arrumar. \\
 \\
-Para essa fase retiramos a entrada de informações pela entrada padrão, as informações necessárias atribuimos no próprio código.
+Para essa fase retiramos a entrada de informações pela entrada padrão, as informações necessárias atribuímos no próprio código (hardcoded).
 \\
 Fizemos uma mudança na tecla que fazem as nave atirarem, a da nave controlada pelas teclas WAD é: "TAB"; e a da nave controlada pelas setas é: ",".
 \end{document}
