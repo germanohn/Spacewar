@@ -6,7 +6,6 @@
 #define DISPLAY_W (DISPLAY_H * UNIVERSE_RATIO)
 #define SCALE_X (DISPLAY_W / UNIVERSE_W)
 #define SCALE_Y (DISPLAY_H / UNIVERSE_H)
-#define MAX_PROJECTILES 10
 
 ALLEGRO_DISPLAY *display;
 ALLEGRO_BITMAP *planet_im;
@@ -16,25 +15,15 @@ ALLEGRO_BITMAP *projectile_im;
 ALLEGRO_BITMAP *background;
 ALLEGRO_EVENT_QUEUE *event_queue;
 
-int NUM_PROJECTILES;
-
 int keys_1[4] = {false, false, false, false};
 int keys_2[4] = {false, false, false, false};
-
-void projectileAdded () {
-  NUM_PROJECTILES++;
-}
-
-void projectileRemoved () {
-  NUM_PROJECTILES--;
-}
 
 int drawInit () {
     if (!al_init ()) {
         fprintf (stderr, "Falha ao inicializar a Allegro.\n");
         return -1;
     }
-    
+
     /* Inclui bibliotecas da Allegro que permite criar as imagens  */
     if (!al_init_image_addon ()) {
         fprintf (stderr, "Falha ao inicializar add-on allegro_image.\n");
@@ -49,10 +38,10 @@ int drawInit () {
         return -1;
     }
 
-    /* Cria fila em que colocamos todos os eventos que vão servir como fonte 
+    /* Cria fila em que colocamos todos os eventos que vão servir como fonte
     para "alimentar" a imagem e assim alterá-la. Nesse caso, os eventos são:
     timer (flag que avisa quando a imagem deve ser refeita); Keyboard
-    com KEY_DOWN (ativado quando tecla está pressionada) e KEY_UP (ativado 
+    com KEY_DOWN (ativado quando tecla está pressionada) e KEY_UP (ativado
     quando a tecla está despressionada); display (Carrega imagem a ser impressa) */
     event_queue = al_create_event_queue ();
     if (!event_queue) {
@@ -61,7 +50,7 @@ int drawInit () {
         return -1;
     }
 
-    /* Verifica se o teclado foi inicializado */ 
+    /* Verifica se o teclado foi inicializado */
     if (!al_install_keyboard ()) {
         fprintf (stderr, "Falha ao iniciar o teclado.\n");
         al_destroy_display (display);
@@ -70,7 +59,7 @@ int drawInit () {
     }
 
     /* Agora inicializamos as imagens que usaremos para cada elemento da
-    imagem, que são planeta, player1, player2, projectile e background 
+    imagem, que são planeta, player1, player2, projectile e background
     (espaço sideral) */
     planet_im = al_load_bitmap ("images/planet.png");
     if (!planet_im) {
@@ -81,7 +70,7 @@ int drawInit () {
     }
 
     player1_im = al_load_bitmap ("images/player1.png");
-    if (!player1_im) {/
+    if (!player1_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Player 1\n");
         al_destroy_display (display);
         al_destroy_event_queue (event_queue);
@@ -180,7 +169,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
         fprintf (stderr, "Erro ao inicalizar timer\n");
 
     /* Indica quais eventos que serão usados na event_queue, isto é, os tipos
-    de eventos que irão "alimentar" a event_queue. No caso, são display, timer 
+    de eventos que irão "alimentar" a event_queue. No caso, são display, timer
     e teclado */
     al_register_event_source (event_queue, al_get_display_event_source (display));
     al_register_event_source (event_queue, al_get_timer_event_source (timer));
@@ -189,8 +178,6 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
     al_flip_display ();
     al_start_timer (timer);
 
-    NUM_PROJECTILES = 0;
-
     while (true) {
         ALLEGRO_EVENT event;
         al_wait_for_event (event_queue, &event);
@@ -198,8 +185,8 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
         if (event.type == ALLEGRO_EVENT_TIMER) {
             redraw = 1;
         }
-        /* Permite que feche a tela da imagem, mas termine de executar o programa, 
-        isto é, ele termina de destroir os objetos (dar free) antes de fechar o 
+        /* Permite que feche a tela da imagem, mas termine de executar o programa,
+        isto é, ele termina de destroir os objetos (dar free) antes de fechar o
         programa*/
         else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
@@ -213,8 +200,8 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                 case ALLEGRO_KEY_W:
                     keys_1[KEY_UP] = true;
                     break;
-                case ALLEGRO_KEY_TAB: 
-                    if (NUM_PROJECTILES < MAX_PROJECTILES) keys_1[KEY_DOWN] = true;
+                case ALLEGRO_KEY_TAB:
+                    keys_1[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_A:
                     keys_1[KEY_LEFT] = true;
@@ -227,8 +214,8 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                 case ALLEGRO_KEY_UP:
                     keys_2[KEY_UP] = true;
                     break;
-                case ALLEGRO_KEY_COMMA: 
-                    if (NUM_PROJECTILES < MAX_PROJECTILES) keys_2[KEY_DOWN] = true;
+                case ALLEGRO_KEY_COMMA:
+                    keys_2[KEY_DOWN] = true;
                     break;
                 case ALLEGRO_KEY_LEFT:
                     keys_2[KEY_LEFT] = true;
@@ -274,7 +261,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
 
             }
         }
-        /* Irá redesenhar a imagem se a flag redraw estiver ativada, isto é, 
+        /* Irá redesenhar a imagem se a flag redraw estiver ativada, isto é,
         o timer indicou que é o momento de redesenhar, e se tiver um evento
         evento na event_queue. */
         if (redraw && al_is_event_queue_empty (event_queue)) {
@@ -286,7 +273,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
             updateKeys (keys_1, player1->body, head);
             updateKeys (keys_2, player2->body, head);
             /* Função que computa as novas posições de cada objeto de acordo
-            com atributos atualizados pela updateKeys (velocidade e ângulo em 
+            com atributos atualizados pela updateKeys (velocidade e ângulo em
             relação ao eixo x) de cada objeto*/
             int endGame = updatePositions (dt, player1, player2, head, planet);
             al_draw_bitmap (background, 0, 0 , 0);

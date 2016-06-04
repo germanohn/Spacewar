@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 #include "simulation.h"
+#define MAX_PROJECTILES 10
+
+int NUM_PROJECTILES;
 
 void applyForces (Body *body1, Body *body2) {
     if (body1 == NULL || body2 == NULL) return;
@@ -87,7 +90,7 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
 
         if (willColide (current->proj->body, planet)) {
             current = projectileDestroyed (previous);
-            projectileRemoved ();
+            NUM_PROJECTILES--;
             continue;
 
         }
@@ -97,8 +100,7 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
             if (willColide (current->proj->body, innerCurrent->proj->body)) {
                 innerCurrent = projectileDestroyed (innerPrevious);
                 current = projectileDestroyed (previous);
-                projectileRemoved ();
-                projectileRemoved ();
+                NUM_PROJECTILES -= 2;
                 currentDestroyed = 1;
                 break;
             }
@@ -139,18 +141,21 @@ void updateKeys (int *key, Body *body, Celula *head) {
         destroyVector (vel);
 
     } else if (key[KEY_DOWN]) {
-        int k = 5e3;
-        Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
+        if (NUM_PROJECTILES < MAX_PROJECTILES) {
+          int k = 5e3;
+          Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
 
-        Projectile *proj = createProjectile (3e4, 1e09,
-                body->position->x + cos (body->angle) * (body->radius + 1e6),
-                body->position->y + sin (body->angle) * (body->radius + 1e6),
-                vel->x, vel->y);
-        head->next = createCelula (proj, head->next);
+          Projectile *proj = createProjectile (3e4, 1e09,
+                  body->position->x + cos (body->angle) * (body->radius + 1e6),
+                  body->position->y + sin (body->angle) * (body->radius + 1e6),
+                  vel->x, vel->y);
+          head->next = createCelula (proj, head->next);
+          NUM_PROJECTILES++;
+
+          destroyVector (vel);
+        }
+
         key[KEY_DOWN] = 0;
-        projectileAdded ();
-
-        destroyVector (vel);
     }
 }
 
@@ -181,7 +186,7 @@ int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body
             Celula *aux = current;
             previous->next = current->next;
             destroyCelula (aux);
-            projectileRemoved ();
+            NUM_PROJECTILES--;
 
         } else {
             Celula *curForce = current->next;
