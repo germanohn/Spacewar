@@ -14,7 +14,7 @@ void applyForces (Body *body1, Body *body2) {
     dist = sqrt (vectorDotProduct (force, force));
 
     /* Se a distância for NaN ou menor que um epsilon = 1e-15, então não aplicamos força pois como não há colisão,
-    dois corpos podem estar numa posição muito próxima (ou na mesma posição). */
+       dois corpos podem estar numa posição muito próxima (ou na mesma posição). */
     if (isnan(dist) || fabs (dist) < 1e-15) return;
 
     /* Deixa o vetor force unitário */
@@ -63,54 +63,54 @@ Celula *projectileDestroyed (Celula *cel) {
 }
 
 int willColide (Body *a, Body *b) {
-  double deltaX = a->position->x - b->position->x;
-  double deltaY = a->position->y - b->position->y;
-  //printf ("deltaX %lf deltaY %lf a->radius %lf b->radius", deltaX, deltaY, a->radius, b->radius);
-  return sqrt(deltaX * deltaX + deltaY * deltaY) < (a->radius + b->radius);
+    double deltaX = a->position->x - b->position->x;
+    double deltaY = a->position->y - b->position->y;
+    //printf ("deltaX %lf deltaY %lf a->radius %lf b->radius", deltaX, deltaY, a->radius, b->radius);
+    return sqrt(deltaX * deltaX + deltaY * deltaY) < (a->radius + b->radius);
 }
 
 int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
-  if (willColide (player1->body, planet) ||         // Player 1 <> Planeta
-      willColide (player2->body, planet) ||         // Player 2 <> Planeta
-      willColide (player1->body, player2->body)) {  // Player 1 <> Player 2
-    return 1;
-
-  }
-
-  Celula *current = head->next, *previous = head;
-  while (current != NULL) {
-      if (willColide (current->proj->body, player1->body) ||
-          willColide (current->proj->body, player2->body)) {
+    if (willColide (player1->body, planet) ||         // Player 1 <> Planeta
+            willColide (player2->body, planet) ||         // Player 2 <> Planeta
+            willColide (player1->body, player2->body)) {  // Player 1 <> Player 2
         return 1;
 
-      }
+    }
 
-      if (willColide (current->proj->body, planet)) {
-        current = projectileDestroyed (previous);
-        continue;
+    Celula *current = head->next, *previous = head;
+    while (current != NULL) {
+        if (willColide (current->proj->body, player1->body) ||
+                willColide (current->proj->body, player2->body)) {
+            return 1;
 
-      }
-      int currentDestroyed = 0;
-      Celula *innerCurrent = current->next, *innerPrevious = current;
-      while (innerCurrent != NULL) {
-        if (willColide (current->proj->body, innerCurrent->proj->body)) {
-          innerCurrent = projectileDestroyed (innerPrevious);
-          current = projectileDestroyed (previous);
-          currentDestroyed = 1;
-          break;
         }
 
-        innerPrevious = innerCurrent;
-        innerCurrent  = innerCurrent->next;
-      }
+        if (willColide (current->proj->body, planet)) {
+            current = projectileDestroyed (previous);
+            continue;
 
-      if (currentDestroyed == 0) {
-        previous = current;
-        current = current->next;
-      }
-  }
+        }
+        int currentDestroyed = 0;
+        Celula *innerCurrent = current->next, *innerPrevious = current;
+        while (innerCurrent != NULL) {
+            if (willColide (current->proj->body, innerCurrent->proj->body)) {
+                innerCurrent = projectileDestroyed (innerPrevious);
+                current = projectileDestroyed (previous);
+                currentDestroyed = 1;
+                break;
+            }
 
-  return 0;
+            innerPrevious = innerCurrent;
+            innerCurrent  = innerCurrent->next;
+        }
+
+        if (currentDestroyed == 0) {
+            previous = current;
+            current = current->next;
+        }
+    }
+
+    return 0;
 }
 
 void updateKeys (int *key, Body *body, Celula *head) {
@@ -134,13 +134,12 @@ void updateKeys (int *key, Body *body, Celula *head) {
             vectorScalarProduct (body->velocity, (double) limit / mod);
     } else if (key[KEY_DOWN]) {
         int k = 5e3;
-        double angle = vectorAngle (body->velocity);
         Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
 
         Projectile *proj = createProjectile (3e4, 1e09,
-          body->position->x + cos (body->angle) * (body->radius + 1e6),
-          body->position->y + sin (body->angle) * (body->radius + 1e6),
-          vel->x, vel->y);
+                body->position->x + cos (body->angle) * (body->radius + 1e6),
+                body->position->y + sin (body->angle) * (body->radius + 1e6),
+                vel->x, vel->y);
         head->next = createCelula (proj, head->next);
         key[KEY_DOWN] = 0;
     }
@@ -160,8 +159,8 @@ int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body
     /* Zera as forças sobre os projéteis */
     Celula *current = head->next, *previous = head;
     while (current != NULL) {
-      bodySetForce (current->proj->body, createVector (0, 0));
-      current = current->next;
+        bodySetForce (current->proj->body, createVector (0, 0));
+        current = current->next;
     }
 
     /* Computa os movimentos dos projéteis */
@@ -178,8 +177,8 @@ int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body
         } else {
             Celula *curForce = current->next;
             while (curForce != NULL) {
-              applyForces (current->proj->body, curForce->proj->body);
-              curForce = curForce->next;
+                applyForces (current->proj->body, curForce->proj->body);
+                curForce = curForce->next;
             }
 
             applyForces (current->proj->body, player1->body);

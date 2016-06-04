@@ -183,7 +183,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                     keys_1[KEY_RIGHT] = true;
                     break;
 
-                // Player 2 (UP, DOWN, LEFT, RIGHT)
+                    // Player 2 (UP, DOWN, LEFT, RIGHT)
                 case ALLEGRO_KEY_UP:
                     keys_2[KEY_UP] = true;
                     break;
@@ -215,7 +215,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
                     keys_1[KEY_RIGHT] = false;
                     break;
 
-                // Player 2 (UP, DOWN, LEFT, RIGHT)
+                    // Player 2 (UP, DOWN, LEFT, RIGHT)
                 case ALLEGRO_KEY_UP:
                     keys_2[KEY_UP] = false;
                     break;
@@ -244,7 +244,7 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
             al_flip_display ();
 
             if (endGame)
-              break;
+                break;
         }
 
     }
