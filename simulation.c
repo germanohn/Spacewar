@@ -186,7 +186,7 @@ int updatePositions (double dt, Ship *player1, Ship *player2, Celula *head, Body
             Celula *aux = current;
             previous->next = current->next;
             destroyCelula (aux);
-            projectileRemoved ();
+            NUM_PROJECTILES--;
 
         } else {
             Celula *curForce = current->next;

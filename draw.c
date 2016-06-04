@@ -70,7 +70,7 @@ int drawInit () {
     }
 
     player1_im = al_load_bitmap ("images/player1.png");
-    if (!player1_im) {/
+    if (!player1_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Player 1\n");
         al_destroy_display (display);
         al_destroy_event_queue (event_queue);
@@ -177,8 +177,6 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_flip_display ();
     al_start_timer (timer);
-
-    NUM_PROJECTILES = 0;
 
     while (true) {
         ALLEGRO_EVENT event;
