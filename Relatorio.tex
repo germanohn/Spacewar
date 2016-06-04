@@ -124,7 +124,7 @@ Para executar uma entrada de teste pré-definida:
 Criamos uma pasta "Samples" que contém diversos casos de testes distindos e verificamos, para cada um deles, se houve qualquer vazamento de memória com o Valgrind. \\ \\
 Para usar o Valgrind:
 \\
-\indent $>\,valgrind\,--leak-check=yes\,--track-origins=yes\,./Spacewar\,50000\,<\,Teste.txt$
+\indent $>\,valgrind\,--leak-check=yes\,--track-origins=yes\,./Spacewar\,50000$
 
 \section{Considerações Finais}
 Em geral, achamos a Allegro uma implementação boa e eficiente da parte gráfica, porém ao rodar o Valgrind tivemos alguns problemas de leak de memória referentes a
