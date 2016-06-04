@@ -21,7 +21,7 @@
 #define DEBUG 0
 
 void initObjects (Body **planet, Ship **player1, Ship **player2) {
-    *planet = createBody (9e06, 6.02e23, 0, 0, 0, 0);
+    *planet = createBody (9e06, 2.02e24, 0, 0, 0, 0);
     *player1 = createShip ("Nave1", 1.6e6, 7.4e04, -3.5786e07, 0, 0, 0);
     *player2 = createShip ("Nave2", 1.6e6, 7.4e04, 3.5786e07, 0, 0, 0);
 }
