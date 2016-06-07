@@ -9,7 +9,7 @@ ALLEGRO_BITMAP *player2_im;
 ALLEGRO_BITMAP *projectile_im;
 ALLEGRO_BITMAP *heart;
 ALLEGRO_TIMER *timer;
-ALLEGRO_EVENT_QUEUE *event_queue;
+static ALLEGRO_EVENT_QUEUE *gameEventQueue;
 
 int keys_1[4] = {false, false, false, false};
 int keys_2[4] = {false, false, false, false};
@@ -20,8 +20,8 @@ int gameControllerInit (double dt) {
     timer (flag que avisa quando a imagem deve ser refeita); Keyboard
     com KEY_DOWN (ativado quando tecla está pressionada) e KEY_UP (ativado
     quando a tecla está despressionada); display (Carrega imagem a ser impressa) */
-    event_queue = al_create_event_queue ();
-    if (!event_queue) {
+    gameEventQueue = al_create_event_queue ();
+    if (!gameEventQueue) {
         fprintf (stderr, "Falha ao criar fila de eventos.\n");
         al_destroy_display (display);
         return -1;
@@ -34,7 +34,7 @@ int gameControllerInit (double dt) {
     if (!planet_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Planeta\n");
         al_destroy_display (display);
-        al_destroy_event_queue (event_queue);
+        al_destroy_event_queue (gameEventQueue);
         return -1;
     }
 
@@ -42,7 +42,7 @@ int gameControllerInit (double dt) {
     if (!player1_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Player 1\n");
         al_destroy_display (display);
-        al_destroy_event_queue (event_queue);
+        al_destroy_event_queue (gameEventQueue);
         al_destroy_bitmap (planet_im);
 
         return -1;
@@ -52,7 +52,7 @@ int gameControllerInit (double dt) {
     if (!player2_im) {
         fprintf (stderr, "Falha ao iniciar a imagem do Player 2\n");
         al_destroy_display (display);
-        al_destroy_event_queue (event_queue);
+        al_destroy_event_queue (gameEventQueue);
         al_destroy_bitmap (planet_im);
         al_destroy_bitmap (player1_im);
 
@@ -63,7 +63,7 @@ int gameControllerInit (double dt) {
     if (!projectile_im) {
         fprintf (stderr, "Falha ao iniciar a imagem dos Projeteis\n");
         al_destroy_display (display);
-        al_destroy_event_queue (event_queue);
+        al_destroy_event_queue (gameEventQueue);
         al_destroy_bitmap (planet_im);
         al_destroy_bitmap (player1_im);
         al_destroy_bitmap (player2_im);
@@ -75,7 +75,7 @@ int gameControllerInit (double dt) {
     if (!timer) {
         fprintf (stderr, "Erro ao inicalizar timer\n");
         al_destroy_display (display);
-        al_destroy_event_queue (event_queue);
+        al_destroy_event_queue (gameEventQueue);
         al_destroy_bitmap (planet_im);
         al_destroy_bitmap (player1_im);
         al_destroy_bitmap (player2_im);
@@ -89,7 +89,7 @@ int gameControllerInit (double dt) {
     if (!heart) {
         fprintf (stderr, "Falha ao iniciar a imagem de vida\n");
         al_destroy_display (display);
-        al_destroy_event_queue (event_queue);
+        al_destroy_event_queue (gameEventQueue);
         al_destroy_bitmap (planet_im);
         al_destroy_bitmap (player1_im);
         al_destroy_bitmap (player2_im);
@@ -97,9 +97,9 @@ int gameControllerInit (double dt) {
     }
 
     /* Popula as fontes do event queue */
-    al_register_event_source (event_queue, al_get_display_event_source (display));
-    al_register_event_source (event_queue, al_get_timer_event_source (timer));
-    al_register_event_source (event_queue, al_get_keyboard_event_source ());
+    al_register_event_source (gameEventQueue, al_get_display_event_source (display));
+    al_register_event_source (gameEventQueue, al_get_timer_event_source (timer));
+    al_register_event_source (gameEventQueue, al_get_keyboard_event_source ());
 
     return 0;
 }
@@ -107,7 +107,7 @@ int gameControllerInit (double dt) {
 /* Função que destroi os elementos da cena depois que o jogo acabou */
 void gameControllerDestroy () {
     al_destroy_timer (timer);
-    al_destroy_event_queue (event_queue);
+    al_destroy_event_queue (gameEventQueue);
     al_destroy_bitmap (planet_im);
     al_destroy_bitmap (player1_im);
     al_destroy_bitmap (player2_im);
@@ -178,8 +178,8 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     /* Indica quando a imagem seve ser refeita */
     int redraw = 1;
 
-    /* Indica quais eventos que serão usados na event_queue, isto é, os tipos
-    de eventos que irão "alimentar" a event_queue. No caso, são display, timer
+    /* Indica quais eventos que serão usados na gameEventQueue, isto é, os tipos
+    de eventos que irão "alimentar" a gameEventQueue. No caso, são display, timer
     e teclado */
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_flip_display ();
@@ -187,7 +187,7 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
 
     while (true) {
         ALLEGRO_EVENT event;
-        al_wait_for_event (event_queue, &event);
+        al_wait_for_event (gameEventQueue, &event);
 
         if (event.type == ALLEGRO_EVENT_TIMER) {
             /* Indica quando a imagem deve ser redesenhada */
@@ -275,8 +275,8 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
             }
         }
         /* Irá redesenhar a imagem se a flag redraw estiver ativada, isto é, o timer
-        indicou que é o momento de redesenhar, e se não tiver um evento na event_queue. */
-        if (redraw && al_is_event_queue_empty (event_queue)) {
+        indicou que é o momento de redesenhar, e se não tiver um evento na gameEventQueue. */
+        if (redraw && al_is_event_queue_empty (gameEventQueue)) {
             redraw = 0;
 
             /* Agora construímos a próxima imagem a ser exibida */
@@ -300,6 +300,4 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                 break;
         }
     }
-
-    gameControllerDestroy ();
 }

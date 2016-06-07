@@ -4,6 +4,6 @@
 #include "game_controller.h"
 
 int menuControllerInit ();
-void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet);
+void menuControllerDraw (double dt);
 
 #endif
