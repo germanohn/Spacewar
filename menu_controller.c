@@ -51,12 +51,12 @@ void menuControllerDraw () {
             /* Agora construímos a próxima imagem a ser exibida */
             al_clear_to_color (white);
             al_draw_bitmap (background, 0, 0 , 0);
-            al_draw_text (font, white, DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "Novo Jogo");
-            al_draw_text (font, white, DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "Sair");
+            al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "Novo Jogo");
+            al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "Sair");
             if (cursor == 0) 
-                al_draw_text (font, white, DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "->");
+                al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "->");
             else 
-                al_draw_text (font, white, DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "->");
+                al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "->");
 
             al_flip_display ();
         }
