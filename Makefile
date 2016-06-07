@@ -1,5 +1,5 @@
 CFLAGS = -Wall -Wextra -ansi -pedantic -O2 --std=c99
-LIBS = -lallegro -lallegro_main -lallegro_image -lallegro_audio -lallegro_acodec -lm
+LIBS = -lallegro -lallegro_main -lallegro_image -lallegro_audio -lallegro_acodec -lallegro_font -lallegro_ttf -lm
 OSNAME := $(shell uname -s)
 
 ifeq ($(OSNAME), Linux)
