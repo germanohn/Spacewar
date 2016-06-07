@@ -133,7 +133,6 @@ void gameControllerDestroy () {
 
 /* Callback de quando um projectile é adicionado */
 void gameControllerProjectileAdded () {
-  printf ("aidshasuidhasdi\n");
   al_play_sample (laser_sound, 0.3, 0.0, 1.4, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
@@ -205,8 +204,8 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     al_flip_display ();
     al_start_timer (timer);
 
-    keys_1[4] = {false, false, false, false};
-    keys_2[4] = {false, false, false, false};
+    keys_1 = {false, false, false, false};
+    keys_2 = {false, false, false, false};
 
     while (true) {
         ALLEGRO_EVENT event;
