@@ -353,12 +353,7 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                         break;
                 }
                 al_flip_display ();
-<<<<<<< HEAD
-                al_rest(4.0);
-
-=======
-                al_rest (3.5); 
->>>>>>> 3d70c760fbcf821741700497ebc2e4a1b887ac84
+                al_rest (3.2); 
                 break;
             }
         }
