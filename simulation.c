@@ -146,7 +146,7 @@ void updateKeys (int *key, Ship *player, Celula *head, int playerIdentifier) {
     } else if (key[KEY_RIGHT]) {
         player->body->angle += 0.08;
     }
-    
+
     if (key[KEY_UP]) {
         // acelera
         // o vetor velocidade ganha mais um componente na direção da nave
@@ -176,7 +176,7 @@ void updateKeys (int *key, Ship *player, Celula *head, int playerIdentifier) {
           Projectile *proj = createProjectile (3e4, 1e09,
                   player->body->position->x + cos (player->body->angle) * (player->body->radius + 1e6),
                   player->body->position->y + sin (player->body->angle) * (player->body->radius + 1e6),
-                  vel->x, vel->y);
+                  vel->x, vel->y, playerIdentifier);
           head->next = createCelula (proj, head->next);
           NUM_PROJECTILES++;
 
