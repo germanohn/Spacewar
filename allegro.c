@@ -1,10 +1,5 @@
 #include "alegro.h"
 
-ALLEGRO_DISPLAY *display;
-ALLEGRO_FONT *mainFont;
-ALLEGRO_BITMAP *background_image;
-ALLEGRO_SAMPLE *background_sound;
-
 int allegroInit () {
   if (!al_init ()) {
       fprintf (stderr, "Falha ao inicializar a Allegro.\n");

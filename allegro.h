@@ -23,6 +23,11 @@
 #define SCALE_X (DISPLAY_W / UNIVERSE_W)
 #define SCALE_Y (DISPLAY_H / UNIVERSE_H)
 
+ALLEGRO_DISPLAY *display;
+ALLEGRO_FONT *mainFont;
+ALLEGRO_BITMAP *background_image;
+ALLEGRO_SAMPLE *background_sound;
+
 /* Inicializador do allegro. Retorna 0 se inicializou, qualquer coisa do contrário. */
 int allegroInit ();
 
