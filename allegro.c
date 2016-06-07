@@ -64,9 +64,9 @@ int allegroInit () {
         return -1;
     }
 
-    background_sound = al_load_sample ("audios/background.wav");
+    background_sound = al_load_sample ("audios/laser-blaster.wav");
     if (!background_sound) {
-        fprintf(stderr, "Falha ao carregar 'audios/background.wav'.\n");
+        fprintf(stderr, "Falha ao carregar 'audios/laser-blaster.wav'.\n");
         al_destroy_display (display);
         al_destroy_bitmap (background_image);
         al_destroy_sample (background_sound);

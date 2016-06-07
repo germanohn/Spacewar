@@ -47,7 +47,7 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                     redraw = 1;
                     break;
                 case ALLEGRO_KEY_ENTER:
-                    if (gameControllerInit () != -1)
+                    if (gameControllerInit (dt) != -1)
                         gameControllerDraw (dt, player1, player2, head, planet);
                     redraw = 1;
                     break;

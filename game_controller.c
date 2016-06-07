@@ -95,12 +95,11 @@ int gameControllerInit (double dt) {
         al_destroy_bitmap (player2_im);
         al_destroy_bitmap (projectile_im);
     }
-    
+
     /* Popula as fontes do event queue */
     al_register_event_source (event_queue, al_get_display_event_source (display));
     al_register_event_source (event_queue, al_get_timer_event_source (timer));
     al_register_event_source (event_queue, al_get_keyboard_event_source ());
-    al_start_timer (timer);
 
     return 0;
 }
@@ -185,6 +184,7 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     e teclado */
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_flip_display ();
+    al_start_timer (timer);
 
     while (true) {
         ALLEGRO_EVENT event;
