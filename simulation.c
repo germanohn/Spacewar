@@ -99,18 +99,12 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
         }
 
         /* 1: player1 ganha, 2: player2 ganha, 3: empate */
-        if (player1->body->qtdLives == 0 && player2->body->qtdLives > 0) {
-            printf ("ganha 2\n");
+        if (player1->body->qtdLives == 0 && player2->body->qtdLives > 0)
             return 2;
-        }
-        else if (player1->body->qtdLives > 0 && player2->body->qtdLives == 0) {
-            printf ("ganha 1\n");
+        else if (player1->body->qtdLives > 0 && player2->body->qtdLives == 0)
             return 1;
-        }
-        else if (player1->body->qtdLives == 0 && player2->body->qtdLives == 0) {
-            printf ("empate\n");
+        else if (player1->body->qtdLives == 0 && player2->body->qtdLives == 0)
             return 3;
-        }
 
         if (current == NULL)
            break;

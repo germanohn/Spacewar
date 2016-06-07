@@ -294,8 +294,25 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
             draw (player1, player2, head, planet);
             al_flip_display ();
 
-            if (endGame)
+            if (endGame) {
+                switch (endGame) {
+                    case 1:
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.25, ALLEGRO_ALIGN_CENTRE, "Player 1 venceu");
+                        break;
+                    case 2:
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.25, ALLEGRO_ALIGN_CENTRE, "Player 2 venceu");
+                        break;
+                    case 3:
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.25, ALLEGRO_ALIGN_CENTRE, "Empate");
+                        break;
+                    default:
+                        break;
+                }
+                al_flip_display ();
+                al_rest(4.0); 
+                
                 break;
+            }
         }
     }
 }
