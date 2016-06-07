@@ -107,7 +107,6 @@ int gameControllerInit (double dt) {
 /* Função que destroi os elementos da cena depois que o jogo acabou */
 void gameControllerDestroy () {
     al_destroy_timer (timer);
-    al_destroy_display (display);
     al_destroy_event_queue (event_queue);
     al_destroy_bitmap (planet_im);
     al_destroy_bitmap (player1_im);
@@ -163,9 +162,9 @@ static void draw (Ship *player1, Ship *player2, Celula *head, Body *planet) {
 
     /* Desenho das vidas de cara nave */
     double dx, dy;
-    dx = 10, dy = DISPLAY_H - 120;
+    dx = 10, dy = DISPLAY_H - 30;
     drawLifes (player1, dx, dy, 1);
-    dx = DISPLAY_W - 100, dy = DISPLAY_H - 120;
+    dx = DISPLAY_W - 100, dy = DISPLAY_H - 30;
     drawLifes (player2, dx, dy, 2);
 
     Celula *aux = head->next;
@@ -193,7 +192,6 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         if (event.type == ALLEGRO_EVENT_TIMER) {
             /* Indica quando a imagem deve ser redesenhada */
             redraw = 1;
-            printf("asdasddas\n");
 
         } else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             /* Permite que feche a tela da imagem, mas termine de executar o programa,
@@ -280,8 +278,6 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         indicou que é o momento de redesenhar, e se não tiver um evento na event_queue. */
         if (redraw && al_is_event_queue_empty (event_queue)) {
             redraw = 0;
-
-            printf ("Olar\n");
 
             /* Agora construímos a próxima imagem a ser exibida */
             al_clear_to_color (al_map_rgb (0, 0, 0));

@@ -77,7 +77,7 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
     player1Planet = willColide (player1->body, planet);
     player2Planet = willColide (player2->body, planet);
     player1and2 = willColide (player1->body, player2->body);
-    
+
     if ((player1Planet && player2Planet) || player1and2)
         return 3;
     else if (player1Planet && !player2Planet)
@@ -97,8 +97,8 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
             NUM_PROJECTILES--;
             player2->body->qtdLives--;
         }
-      
-        /* 1: player1 ganha, 2: player2 ganha, 3: empate */ 
+
+        /* 1: player1 ganha, 2: player2 ganha, 3: empate */
         if (player1->body->qtdLives == 0 && player2->body->qtdLives > 0) {
             printf ("ganha 2\n");
             return 2;
@@ -111,9 +111,9 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
             printf ("empate\n");
             return 3;
         }
-       
+
         if (current == NULL)
-           break; 
+           break;
 
         if (willColide (current->proj->body, planet)) {
             current = projectileDestroyed (previous);
@@ -151,8 +151,8 @@ void updateKeys (int *key, Body *body, Celula *head) {
         body->angle -= 0.08;
     } else if (key[KEY_RIGHT]) {
         body->angle += 0.08;
-    } 
-    
+    }
+
     if (key[KEY_UP]) {
         // acelera
         // o vetor velocidade ganha mais um componente na direção da nave
@@ -168,8 +168,8 @@ void updateKeys (int *key, Body *body, Celula *head) {
 
         destroyVector (vel);
 
-    } 
-    
+    }
+
     if (key[KEY_DOWN]) {
         if (NUM_PROJECTILES < MAX_PROJECTILES) {
           int k = 5e3;
@@ -183,8 +183,6 @@ void updateKeys (int *key, Body *body, Celula *head) {
           NUM_PROJECTILES++;
 
           destroyVector (vel);
-
-          al_play_sample(background_sound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
         }
 
         key[KEY_DOWN] = 0;

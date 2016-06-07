@@ -56,15 +56,15 @@ int allegroInit () {
         return -1;
     }
 
-    mainFont = al_load_ttf_font ("fonts/terminator.ttf", 48, 0);
+    mainFont = al_load_ttf_font ("fonts/Starjedi.ttf", 48, 0);
     if (!mainFont) {
-        fprintf(stderr, "Falha ao carregar 'fonts/terminator.ttf'.\n");
+        fprintf(stderr, "Falha ao carregar 'fonts/Starjedi.ttf'.\n");
         al_destroy_display (display);
         al_destroy_bitmap (background_image);
         return -1;
     }
 
-    background_sound = al_load_sample ("audios/laser-blaster.wav");
+    background_sound = al_load_sample ("audios/sw-background.wav");
     if (!background_sound) {
         fprintf(stderr, "Falha ao carregar 'audios/laser-blaster.wav'.\n");
         al_destroy_display (display);
@@ -72,8 +72,6 @@ int allegroInit () {
         al_destroy_sample (background_sound);
         return -1;
     }
-
-    printf("Frescou 3\n");
 
     return 0;
 }
