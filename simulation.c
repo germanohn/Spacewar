@@ -93,14 +93,11 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
             player1->body->qtdLives--;
         }
         if (current != NULL && willColide (current->proj->body, player2->body)) {
-            printf ("antes de destruir\n");
             current = projectileDestroyed (previous);
-            printf ("depois\n");
             NUM_PROJECTILES--;
             player2->body->qtdLives--;
         }
       
-        printf ("1qtdLives %d 2qtdLives %d\n", player1->body->qtdLives, player2->body->qtdLives); 
         /* 1: player1 ganha, 2: player2 ganha, 3: empate */ 
         if (player1->body->qtdLives == 0 && player2->body->qtdLives > 0) {
             printf ("ganha 2\n");
@@ -122,7 +119,6 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
             current = projectileDestroyed (previous);
             NUM_PROJECTILES--;
             continue;
-
         }
         int currentDestroyed = 0;
         Celula *innerCurrent = current->next, *innerPrevious = current;
@@ -155,7 +151,9 @@ void updateKeys (int *key, Body *body, Celula *head) {
         body->angle -= 0.08;
     } else if (key[KEY_RIGHT]) {
         body->angle += 0.08;
-    } else if (key[KEY_UP]) {
+    } 
+    
+    if (key[KEY_UP]) {
         // acelera
         // o vetor velocidade ganha mais um componente na direção da nave
         // que será k * (cos0, sen0), tal que k é um constante e (cos0, sen0)
@@ -170,7 +168,9 @@ void updateKeys (int *key, Body *body, Celula *head) {
 
         destroyVector (vel);
 
-    } else if (key[KEY_DOWN]) {
+    } 
+    
+    if (key[KEY_DOWN]) {
         if (NUM_PROJECTILES < MAX_PROJECTILES) {
           int k = 5e3;
           Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
