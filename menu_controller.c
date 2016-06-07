@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <math.h>
-#include "allegro.h"
 #include "menu_controller.h"
 
 ALLEGRO_EVENT_QUEUE *event_queue;
 ALLEGRO_COLOR white = al_map_rgb (0, 0, 0);
-int point = 0;
+int cursor = 0;
 
 int menuControllerInit () {
     event_queue = al_create_event_queue ();
@@ -43,8 +42,8 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                     redraw = 1;
                     break;
                 case ALLEGRO_KEY_ENTER:
-                    if (drawInit () != -1)
-                        drawScene (dt, *player1, *player2, *head, *planet);
+                    if (gameControllerInit () != -1)
+                        gameControllerDraw (dt, *player1, *player2, *head, *planet);
                     redraw = 1;
                     
            }
@@ -53,7 +52,7 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
             redraw = 0;
             /* Agora construímos a próxima imagem a ser exibida */
             al_clear_to_color (white);
-            al_draw_bitmap (background, 0, 0 , 0);
+            al_draw_bitmap (background_image, 0, 0 , 0);
             al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "Novo Jogo");
             al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "Sair");
             if (cursor == 0) 
@@ -65,3 +64,4 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         }
 
     }
+}
