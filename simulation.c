@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "simulation.h"
-#define MAX_PROJECTILES 50
+#define MAX_PROJECTILES 20
 
 int NUM_PROJECTILES;
 

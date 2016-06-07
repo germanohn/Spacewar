@@ -1,6 +1,13 @@
 #include "allegro.h"
 
 int allegroInit () {
+    DISPLAY_H = 700;
+    DISPLAY_W = (DISPLAY_H * UNIVERSE_RATIO);
+    SCALE_X = (DISPLAY_W / UNIVERSE_W);
+    SCALE_Y = (DISPLAY_H / UNIVERSE_H);
+    UNIVERSE_RATIO = 1.5;
+    UNIVERSE_H = 8e7;
+    UNIVERSE_W = (UNIVERSE_H * UNIVERSE_RATIO);
     if (!al_init ()) {
         fprintf (stderr, "Falha ao inicializar a Allegro.\n");
         return -1;
