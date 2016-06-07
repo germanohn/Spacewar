@@ -204,8 +204,8 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     al_flip_display ();
     al_start_timer (timer);
 
-    keys_1 = {false, false, false, false};
-    keys_2 = {false, false, false, false};
+    keys_1[0] = keys_1[1] = keys_1[2] = keys_1[3] = false;
+    keys_2[0] = keys_2[1] = keys_2[2] = keys_2[3] = false;
 
     while (true) {
         ALLEGRO_EVENT event;
