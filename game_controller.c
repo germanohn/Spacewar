@@ -9,10 +9,11 @@ ALLEGRO_BITMAP *player2_im;
 ALLEGRO_BITMAP *projectile_im;
 ALLEGRO_BITMAP *heart;
 ALLEGRO_TIMER *timer;
+ALLEGRO_SAMPLE *laser_sound;
 static ALLEGRO_EVENT_QUEUE *gameEventQueue;
 
-int keys_1[4] = {false, false, false, false};
-int keys_2[4] = {false, false, false, false};
+int keys_1[4];
+int keys_2[4];
 
 int gameControllerInit (double dt) {
     /* Cria fila em que colocamos todos os eventos que vão servir como fonte
@@ -96,6 +97,20 @@ int gameControllerInit (double dt) {
         al_destroy_bitmap (projectile_im);
     }
 
+    laser_sound = al_load_sample ("audios/laser-blaster.wav");
+    if (!laser_sound) {
+        fprintf(stderr, "Falha ao carregar 'audios/laser-blaster.wav'.\n");
+        al_destroy_display (display);
+        al_destroy_event_queue (gameEventQueue);
+        al_destroy_bitmap (planet_im);
+        al_destroy_bitmap (player1_im);
+        al_destroy_bitmap (player2_im);
+        al_destroy_bitmap (projectile_im);
+        al_destroy_bitmap (heart);
+
+        return -1;
+    }
+
     /* Popula as fontes do event queue */
     al_register_event_source (gameEventQueue, al_get_display_event_source (display));
     al_register_event_source (gameEventQueue, al_get_timer_event_source (timer));
@@ -113,6 +128,13 @@ void gameControllerDestroy () {
     al_destroy_bitmap (player2_im);
     al_destroy_bitmap (projectile_im);
     al_destroy_bitmap (heart);
+    al_destroy_sample (laser_sound);
+}
+
+/* Callback de quando um projectile é adicionado */
+void gameControllerProjectileAdded () {
+  printf ("aidshasuidhasdi\n");
+  al_play_sample (laser_sound, 0.3, 0.0, 1.4, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 /* Função que imprime na tela a imagem correspondente ao objeto recebido */
@@ -182,6 +204,9 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_flip_display ();
     al_start_timer (timer);
+
+    keys_1[4] = {false, false, false, false};
+    keys_2[4] = {false, false, false, false};
 
     while (true) {
         ALLEGRO_EVENT event;
