@@ -12,10 +12,10 @@ int allegroInit () {
         return -1;
     }
 
-    if (!al_init_font_addon ()) {
-        fprintf (stderr, "Falha ao inicializar add-on allegro_font.\n");
-        return -1;
-    }
+    //if (!al_init_font_addon ()) {
+        //fprintf (stderr, "Falha ao inicializar add-on allegro_font.\n");
+        //return -1;
+    //}
 
     if (!al_init_ttf_addon ()) {
         fprintf (stderr, "Falha ao inicializar add-on allegro_ttf.\n");
