@@ -73,26 +73,52 @@ int willColide (Body *a, Body *b) {
 }
 
 int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
-    if (willColide (player1->body, planet) ||         // Player 1 <> Planeta
-            willColide (player2->body, planet) ||         // Player 2 <> Planeta
-            willColide (player1->body, player2->body)) {  // Player 1 <> Player 2
+    int player1Planet, player2Planet, player1and2;
+    player1Planet = willColide (player1->body, planet);
+    player2Planet = willColide (player2->body, planet);
+    player1and2 = willColide (player1->body, player2->body);
+    
+    if ((player1Planet && player2Planet) || player1and2)
+        return 3;
+    else if (player1Planet && !player2Planet)
+        return 2;
+    else if (!player1Planet && player2Planet)
         return 1;
-
-    }
 
     Celula *current = head->next, *previous = head;
     while (current != NULL) {
-        if (willColide (current->proj->body, player1->body) ||
-                willColide (current->proj->body, player2->body)) {
-            return 1;
-
+        if (willColide (current->proj->body, player1->body)) {
+            current = projectileDestroyed (previous);
+            NUM_PROJECTILES--;
+            player1->body->qtdLives--;
         }
+        if (current != NULL && willColide (current->proj->body, player2->body)) {
+            current = projectileDestroyed (previous);
+            NUM_PROJECTILES--;
+            player2->body->qtdLives--;
+        }
+      
+        /* 1: player1 ganha, 2: player2 ganha, 3: empate */ 
+        if (player1->body->qtdLives == 0 && player2->body->qtdLives > 0) {
+            printf ("ganha 2\n");
+            return 2;
+        }
+        else if (player1->body->qtdLives > 0 && player2->body->qtdLives == 0) {
+            printf ("ganha 1\n");
+            return 1;
+        }
+        else if (player1->body->qtdLives == 0 && player2->body->qtdLives == 0) {
+            printf ("empate\n");
+            return 3;
+        }
+       
+        if (current == NULL)
+           break; 
 
         if (willColide (current->proj->body, planet)) {
             current = projectileDestroyed (previous);
             NUM_PROJECTILES--;
             continue;
-
         }
         int currentDestroyed = 0;
         Celula *innerCurrent = current->next, *innerPrevious = current;
@@ -125,7 +151,9 @@ void updateKeys (int *key, Body *body, Celula *head) {
         body->angle -= 0.08;
     } else if (key[KEY_RIGHT]) {
         body->angle += 0.08;
-    } else if (key[KEY_UP]) {
+    } 
+    
+    if (key[KEY_UP]) {
         // acelera
         // o vetor velocidade ganha mais um componente na direção da nave
         // que será k * (cos0, sen0), tal que k é um constante e (cos0, sen0)
@@ -140,7 +168,9 @@ void updateKeys (int *key, Body *body, Celula *head) {
 
         destroyVector (vel);
 
-    } else if (key[KEY_DOWN]) {
+    } 
+    
+    if (key[KEY_DOWN]) {
         if (NUM_PROJECTILES < MAX_PROJECTILES) {
           int k = 5e3;
           Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));

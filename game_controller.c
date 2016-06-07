@@ -7,6 +7,7 @@ ALLEGRO_BITMAP *planet_im;
 ALLEGRO_BITMAP *player1_im;
 ALLEGRO_BITMAP *player2_im;
 ALLEGRO_BITMAP *projectile_im;
+ALLEGRO_BITMAP *heart;
 ALLEGRO_TIMER *timer;
 ALLEGRO_EVENT_QUEUE *event_queue;
 
@@ -83,6 +84,17 @@ int gameControllerInit (double dt) {
         return -1;
     }
 
+    // coracao
+    heart = al_load_bitmap ("images/heart.png");
+    if (!heart) {
+        fprintf (stderr, "Falha ao iniciar a imagem de vida\n");
+        al_destroy_display (display);
+        al_destroy_event_queue (event_queue);
+        al_destroy_bitmap (planet_im);
+        al_destroy_bitmap (player1_im);
+        al_destroy_bitmap (player2_im);
+        al_destroy_bitmap (projectile_im);
+    }
     /* Popula as fontes do event queue */
     al_register_event_source (event_queue, al_get_display_event_source (display));
     al_register_event_source (event_queue, al_get_timer_event_source (timer));
@@ -101,15 +113,16 @@ void gameControllerDestroy () {
     al_destroy_bitmap (player2_im);
     al_destroy_bitmap (projectile_im);
     al_destroy_bitmap (background);
+    al_destroy_bitmap (heart);
 }
 
 /* Função que imprime na tela a imagem correspondente ao objeto recebido */
-static void draw (ALLEGRO_BITMAP *image, Body *body) {
+static void drawBody (ALLEGRO_BITMAP *image, Body *body) {
     /* Posicoes em escala */
     double sx = body->position->x * SCALE_X + DISPLAY_W / 2.0;
     double sy = body->position->y * SCALE_Y + DISPLAY_H / 2.0;
 
-    /* Pixels da imagem */
+    /* Pixels da imagem: retorna a largura do bitmap em pixels */
     double pw = al_get_bitmap_width (image) / 2.0;
     double ph = al_get_bitmap_height (image) / 2.0;
 
@@ -120,14 +133,44 @@ static void draw (ALLEGRO_BITMAP *image, Body *body) {
     al_draw_scaled_rotated_bitmap (image, pw, ph, sx, sy, cteX, cteY, body->angle, 0);
 }
 
+static void drawLifes (Ship *player, int dx, int dy, int kind) {
+    double pw, ph;
+    for (int i = 0; i < player->body->qtdLives; i++) {
+        //dx = body->position->x * SCALE_X + DISPLAY_W / 2.0;
+        //dy = body->position->y * SCALE_Y + DISPLAY_H / 2.0;
+        
+        pw = al_get_bitmap_width (heart);
+        ph = al_get_bitmap_height (heart);
+        
+        al_draw_scaled_bitmap (heart, 0, 0, pw, ph, dx, dy, pw/45, ph/45, 0);
+        //dx += kind ? 10 : -10;
+        if (kind)
+            dx += 28;
+        else 
+            dx -= 28;
+    } 
+}
+
 /* função que encapsula a draw e faz todos os objetos serem impressos na tela */
-static void drawBodies (Ship *player1, Ship *player2, Celula *head, Body *planet) {
-    draw (player1_im, player1->body);
-    draw (player2_im, player2->body);
-    draw (planet_im, planet);
+static void draw (Ship *player1, Ship *player2, Celula *head, Body *planet) {
+    /* Desenho do fundo de tela */
+    al_draw_bitmap (background, 0, 0, 0);
+
+    /* Desenho dos objetos do jogo */
+    drawBody (player1_im, player1->body);
+    drawBody (player2_im, player2->body);
+    drawBody (planet_im, planet);
+
+    /* Desenho das vidas de cara nave */
+    double dx, dy;
+    dx = 10, dy = DISPLAY_H - 120;
+    drawLifes (player1, dx, dy, 1);
+    dx = DISPLAY_W - 100, dy = DISPLAY_H - 120;
+    drawLifes (player2, dx, dy, 2);
+
     Celula *aux = head->next;
     while (aux != NULL) {
-        draw (projectile_im, aux->proj->body);
+        drawBody (projectile_im, aux->proj->body);
         aux = aux->next;
     }
 }
@@ -249,10 +292,9 @@ void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *pla
             com atributos atualizados pela updateKeys (velocidade e ângulo em
             relação ao eixo x) de cada objeto*/
             int endGame = updatePositions (dt, player1, player2, head, planet);
-            al_draw_bitmap (background, 0, 0 , 0);
 
             /* Imprime na tela a imagem resultante construída */
-            drawBodies (player1, player2, head, planet);
+            draw (player1, player2, head, planet);
             al_flip_display ();
 
             if (endGame)
