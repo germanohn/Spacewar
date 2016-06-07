@@ -132,21 +132,23 @@ static void drawBody (ALLEGRO_BITMAP *image, Body *body) {
     al_draw_scaled_rotated_bitmap (image, pw, ph, sx, sy, cteX, cteY, body->angle, 0);
 }
 
-static void drawLifes (Ship *player, int dx, int dy, int kind) {
-    double pw, ph;
-    for (int i = 0; i < player->body->qtdLives; i++) {
-        //dx = body->position->x * SCALE_X + DISPLAY_W / 2.0;
-        //dy = body->position->y * SCALE_Y + DISPLAY_H / 2.0;
+static void drawLives (Ship *player1, Ship *player2) {
+    double dx, dy, pw, ph;
+    pw = al_get_bitmap_width (heart);
+    ph = al_get_bitmap_height (heart);
 
-        pw = al_get_bitmap_width (heart);
-        ph = al_get_bitmap_height (heart);
-
+    /* player1 */
+    dx = 10, dy = DISPLAY_H - 10 - ph/45;
+    for (int i = 0; i < player1->body->qtdLives; i++) {
         al_draw_scaled_bitmap (heart, 0, 0, pw, ph, dx, dy, pw/45, ph/45, 0);
-        //dx += kind ? 10 : -10;
-        if (kind)
-            dx += 28;
-        else
-            dx -= 28;
+        dx += 28;
+    }
+
+    /* player2 */
+    dx = DISPLAY_W - 10 - pw/45;
+    for (int i = 0; i < player2->body->qtdLives; i++) {
+        al_draw_scaled_bitmap (heart, 0, 0, pw, ph, dx, dy, pw/45, ph/45, 0);
+        dx -= 28;
     }
 }
 
@@ -161,11 +163,7 @@ static void draw (Ship *player1, Ship *player2, Celula *head, Body *planet) {
     drawBody (planet_im, planet);
 
     /* Desenho das vidas de cara nave */
-    double dx, dy;
-    dx = 10, dy = DISPLAY_H - 30;
-    drawLifes (player1, dx, dy, 1);
-    dx = DISPLAY_W - 100, dy = DISPLAY_H - 30;
-    drawLifes (player2, dx, dy, 2);
+    drawLives (player1, player2);
 
     Celula *aux = head->next;
     while (aux != NULL) {
