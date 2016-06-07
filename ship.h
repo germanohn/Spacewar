@@ -17,6 +17,7 @@
 typedef struct ship_struct {
     char *name;
     Body *body;
+    double lastTimeShoot;
 } Ship;
 
 /* construtor do ship */
