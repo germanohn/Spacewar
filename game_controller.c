@@ -7,6 +7,7 @@ ALLEGRO_BITMAP *planet_im;
 ALLEGRO_BITMAP *player1_im;
 ALLEGRO_BITMAP *player2_im;
 ALLEGRO_BITMAP *projectile_im;
+ALLEGRO_BITMAP *projectile_green_im;
 ALLEGRO_BITMAP *heart;
 ALLEGRO_TIMER *timer;
 ALLEGRO_SAMPLE *laser_sound;
@@ -72,6 +73,18 @@ int gameControllerInit (double dt) {
         return -1;
     }
 
+    projectile_green_im = al_load_bitmap ("images/projectile-green.png");
+    if (!projectile_im) {
+        fprintf (stderr, "Falha ao iniciar a imagem dos Projeteis (verde)\n");
+        al_destroy_display (display);
+        al_destroy_event_queue (gameEventQueue);
+        al_destroy_bitmap (planet_im);
+        al_destroy_bitmap (player1_im);
+        al_destroy_bitmap (player2_im);
+        al_destroy_bitmap (projectile_im);
+        return -1;
+    }
+
     timer = al_create_timer (1.0 / dt);
     if (!timer) {
         fprintf (stderr, "Erro ao inicalizar timer\n");
@@ -81,6 +94,7 @@ int gameControllerInit (double dt) {
         al_destroy_bitmap (player1_im);
         al_destroy_bitmap (player2_im);
         al_destroy_bitmap (projectile_im);
+        al_destroy_bitmap (projectile_green_im);
 
         return -1;
     }
@@ -95,6 +109,10 @@ int gameControllerInit (double dt) {
         al_destroy_bitmap (player1_im);
         al_destroy_bitmap (player2_im);
         al_destroy_bitmap (projectile_im);
+        al_destroy_bitmap (projectile_green_im);
+        al_destroy_timer (timer);
+
+        return -1;
     }
 
     laser_sound = al_load_sample ("audios/laser-blaster.wav");
@@ -106,6 +124,8 @@ int gameControllerInit (double dt) {
         al_destroy_bitmap (player1_im);
         al_destroy_bitmap (player2_im);
         al_destroy_bitmap (projectile_im);
+        al_destroy_bitmap (projectile_green_im);
+        al_destroy_timer (timer);
         al_destroy_bitmap (heart);
 
         return -1;
@@ -334,8 +354,8 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                         break;
                 }
                 al_flip_display ();
-                al_rest(4.0); 
-                
+                al_rest(4.0);
+
                 break;
             }
         }
