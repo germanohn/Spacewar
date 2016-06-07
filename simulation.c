@@ -144,27 +144,27 @@ int verifyColission (Ship *player1, Ship *player2, Body *planet, Celula *head) {
     return 0;
 }
 
-void updateKeys (int *key, Body *body, Celula *head) {
+void updateKeys (int *key, Ship *player, Celula *head) {
     // atualiza o angulo
     if (key[KEY_LEFT]) {
         // diminui o angulo
-        body->angle -= 0.08;
+        player->body->angle -= 0.08;
     } else if (key[KEY_RIGHT]) {
-        body->angle += 0.08;
+        player->body->angle += 0.08;
     }
-
+    
     if (key[KEY_UP]) {
         // acelera
         // o vetor velocidade ganha mais um componente na direção da nave
         // que será k * (cos0, sen0), tal que k é um constante e (cos0, sen0)
         // é o vetor unitário na direção da nave
         int k = 100, limit = 4.5e3;
-        Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
-        vectorSum (body->velocity, vel);
+        Vector *vel = createVector (k * cos (player->body->angle), k * sin (player->body->angle));
+        vectorSum (player->body->velocity, vel);
         // modulo do vetor body->velocity para verificar se passou do limite de velocidade
-        double mod = sqrt (vectorDotProduct (body->velocity, body->velocity));
+        double mod = sqrt (vectorDotProduct (player->body->velocity, player->body->velocity));
         if (mod > limit)
-            vectorScalarProduct (body->velocity, (double) limit / mod);
+            vectorScalarProduct (player->body->velocity, (double) limit / mod);
 
         destroyVector (vel);
 
@@ -172,17 +172,22 @@ void updateKeys (int *key, Body *body, Celula *head) {
 
     if (key[KEY_DOWN]) {
         if (NUM_PROJECTILES < MAX_PROJECTILES) {
-          int k = 5e3;
-          Vector *vel = createVector (k * cos (body->angle), k * sin (body->angle));
+           if (player->lastTimeShoot <= 0.20)
+                return;
+
+          player->lastTimeShoot = 0;
+          int k = 7.5e3;
+          Vector *vel = createVector (k * cos (player->body->angle), k * sin (player->body->angle));
 
           Projectile *proj = createProjectile (3e4, 1e09,
-                  body->position->x + cos (body->angle) * (body->radius + 1e6),
-                  body->position->y + sin (body->angle) * (body->radius + 1e6),
+                  player->body->position->x + cos (player->body->angle) * (player->body->radius + 1e6),
+                  player->body->position->y + sin (player->body->angle) * (player->body->radius + 1e6),
                   vel->x, vel->y);
           head->next = createCelula (proj, head->next);
           NUM_PROJECTILES++;
 
           destroyVector (vel);
+
         }
 
         key[KEY_DOWN] = 0;

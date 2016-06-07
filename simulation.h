@@ -26,6 +26,6 @@ enum KEYS {
 };
 
 /* Atualiza o movimento de um corpo de acordo com as teclas pressionada */
-void updateKeys (int *key, Body *body, Celula *head);
+void updateKeys (int *key, Ship *player, Celula *head);
 
 #endif

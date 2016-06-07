@@ -9,6 +9,7 @@ Ship* createShip (char *name, double radius, double weight, double x, double y, 
     if (ship != NULL) {
         ship->name = name;
         ship->body = createBody (radius, weight, x, y, vx, vy);
+        ship->lastTimeShoot = 0;
     }
 
     return ship;

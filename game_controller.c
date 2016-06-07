@@ -190,7 +190,9 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         if (event.type == ALLEGRO_EVENT_TIMER) {
             /* Indica quando a imagem deve ser redesenhada */
             redraw = 1;
-
+            /* Para disparar tiros tem que ter uma diferença de 0.5s entre um tiro e outro*/
+            player1->lastTimeShoot += 1/dt;
+            player2->lastTimeShoot += 1/dt;
         } else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             /* Permite que feche a tela da imagem, mas termine de executar o programa,
             isto é, ele termina de destroir os objetos (dar free) antes de fechar o
@@ -282,8 +284,8 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
 
             /* Função que altera o elementos de cada nave (aceleração, ângulo)
             e cria projéteis, se as teclas correspondentes estiverem ativadas. */
-            updateKeys (keys_1, player1->body, head);
-            updateKeys (keys_2, player2->body, head);
+            updateKeys (keys_1, player1, head);
+            updateKeys (keys_2, player2, head);
 
             /* Função que computa as novas posições de cada objeto de acordo
             com atributos atualizados pela updateKeys (velocidade e ângulo em
