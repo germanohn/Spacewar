@@ -183,6 +183,8 @@ void updateKeys (int *key, Body *body, Celula *head) {
           NUM_PROJECTILES++;
 
           destroyVector (vel);
+
+          gameControllerProjectileAdded ();
         }
 
         key[KEY_DOWN] = 0;

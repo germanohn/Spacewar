@@ -28,4 +28,7 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
 /* Função que destroi os elementos da cena depois que o jogo acabou */
 void gameControllerDestroy ();
 
+/* Callback de quando um projectile é adicionado */
+void gameControllerProjectileAdded ();
+
 #endif
