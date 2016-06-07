@@ -5,6 +5,7 @@
 #include "vector.h"
 #include "ship.h"
 #include "projectile.h"
+#include "allegro.h"
 
 #define UNIVERSE_RATIO 1.5
 #define UNIVERSE_H 8e7

@@ -183,6 +183,8 @@ void updateKeys (int *key, Body *body, Celula *head) {
           NUM_PROJECTILES++;
 
           destroyVector (vel);
+
+          al_play_sample(background_sound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
         }
 
         key[KEY_DOWN] = 0;
