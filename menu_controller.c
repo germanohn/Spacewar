@@ -15,7 +15,7 @@ int menuControllerInit () {
     }
 }
 
-void menuControllerDraw () {
+void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
     int redraw = 1;
 
     al_register_event_source (event_queue, al_get_display_event_source (display));
@@ -42,6 +42,8 @@ void menuControllerDraw () {
                     redraw = 1;
                     break;
                 case ALLEGRO_KEY_ENTER:
+                    if (drawInit () != -1)
+                        drawScene (dt, *player1, *player2, *head, *planet);
                     redraw = 1;
                     
            }
