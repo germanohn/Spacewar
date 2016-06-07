@@ -149,6 +149,8 @@ void gameControllerDestroy () {
     al_destroy_bitmap (projectile_im);
     al_destroy_bitmap (heart);
     al_destroy_sample (laser_sound);
+
+    NUM_PROJECTILES = 0;
 }
 
 /* Callback de quando um projectile é adicionado */

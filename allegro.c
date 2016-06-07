@@ -42,6 +42,10 @@ int allegroInit () {
 
     /* Cria o display que será a imagem mostrada do jogo e que possui duas dimensões
        DISPLAY_W (largura) DISPLAY_H (altura).*/
+    ALLEGRO_DISPLAY_MODE   disp_data;
+    al_get_display_mode(al_get_num_display_modes() - 1, &disp_data);
+    al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+    display = al_create_display(disp_data.width, disp_data.height);
     display = al_create_display (DISPLAY_W, DISPLAY_H);
     if (!display) {
         fprintf (stderr, "Falha ao criar janela.\n");
@@ -49,7 +53,7 @@ int allegroInit () {
     }
 
     /* Bitmap do fundo */
-    background_image = al_load_bitmap ("images/space.jpg");
+    background_image = al_load_bitmap ("./images/space.jpg");
     if (!background_image) {
         fprintf (stderr, "Falha ao carregar 'images/space.jpg'.\n");
         al_destroy_display (display);

@@ -22,10 +22,11 @@
 #define DEBUG 0
 
 int main (int argc, char **argv) {
-    if (argc != 2)
-        fprintf (stderr, "errô\n");
+    printf("Teste: %s", argv[0]);
+    double dt = 60.0;
 
-    double dt = strtod (argv[1], NULL);
+    if (argc == 2)
+        dt = strtod (argv[1], NULL);
 
     if (allegroInit () == -1 || menuControllerInit ())
       return -1;
