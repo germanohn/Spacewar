@@ -27,9 +27,9 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     while (true) { 
         ALLEGRO_EVENT event;
         al_wait_for_event (event_queue, &event);
-//        if (event.type == ALLEGRO_EVENT_DIPLAY_CLOSE) {
- //           break;
-   //     }
+        if (event.type == ALLEGRO_EVENT_DIPLAY_CLOSE) {
+            break;
+        }
         if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
            switch (event.keyboard.keycode) {
                 case ALLEGRO_KEY_UP:
