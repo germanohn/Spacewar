@@ -9,8 +9,8 @@
 /**                                                           **/
 /***************************************************************/
 
-#ifndef __DRAW_H__
-#define __DRAW_H__
+#ifndef __ALLEGRO_H__
+#define __ALLEGRO_H__
 
 #include <stdio.h>
 #include <allegro5/allegro.h>
