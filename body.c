@@ -13,6 +13,7 @@ Body* createBody (double radius, double weight, double x, double y, double vx, d
         body->weight = weight;
         body->force = createVector (0, 0);
         body->angle = 0.0;
+        body->qtdLives = 3;
     }
 
     return body;

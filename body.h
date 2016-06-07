@@ -16,6 +16,7 @@
 #define CONST_GRAVITACIONAL 6.67e-11
 
 typedef struct body_struct {
+    int qtdLives;
     double radius;
     double weight;
     double angle;
