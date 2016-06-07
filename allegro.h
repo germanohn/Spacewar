@@ -21,13 +21,13 @@
 #include <allegro5/allegro_ttf.h>
 #include "simulation.h"
 
-double DISPLAY_H; 
+double DISPLAY_H;
 double DISPLAY_W;
 double SCALE_X;
-double SCALE_Y; 
-double UNIVERSE_RATIO 1.5
-double UNIVERSE_H 8e7
-double UNIVERSE_W (UNIVERSE_H * UNIVERSE_RATIO)
+double SCALE_Y;
+double UNIVERSE_RATIO;
+double UNIVERSE_H;
+double UNIVERSE_W;
 
 ALLEGRO_DISPLAY *display;
 ALLEGRO_FONT *mainFont;

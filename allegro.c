@@ -1,13 +1,6 @@
 #include "allegro.h"
 
 int allegroInit () {
-    DISPLAY_H = 700;
-    DISPLAY_W = (DISPLAY_H * UNIVERSE_RATIO);
-    SCALE_X = (DISPLAY_W / UNIVERSE_W);
-    SCALE_Y = (DISPLAY_H / UNIVERSE_H);
-    UNIVERSE_RATIO = 1.5;
-    UNIVERSE_H = 8e7;
-    UNIVERSE_W = (UNIVERSE_H * UNIVERSE_RATIO);
     if (!al_init ()) {
         fprintf (stderr, "Falha ao inicializar a Allegro.\n");
         return -1;
@@ -19,6 +12,7 @@ int allegroInit () {
         return -1;
     }
 
+    // al_init_primitives_addon ();
     al_init_font_addon ();
 
     if (!al_init_ttf_addon ()) {
@@ -49,10 +43,24 @@ int allegroInit () {
 
     /* Cria o display que será a imagem mostrada do jogo e que possui duas dimensões
        DISPLAY_W (largura) DISPLAY_H (altura).*/
-    ALLEGRO_DISPLAY_MODE   disp_data;
+    ALLEGRO_DISPLAY_MODE disp_data;
     al_get_display_mode(al_get_num_display_modes() - 1, &disp_data);
-    al_set_new_display_flags(ALLEGRO_FULLSCREEN);
-    display = al_create_display(disp_data.width, disp_data.height);
+    al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+
+    ALLEGRO_MONITOR_INFO info;
+    int i = 0;
+    do {
+      al_get_monitor_info(i++, &info);
+    } while (!(info.x1 == 0 && info.y1 == 0));
+    DISPLAY_W = info.x2 - info.x1;
+    DISPLAY_H = info.y2 - info.y1;
+
+    UNIVERSE_RATIO = 1.0 * DISPLAY_W / DISPLAY_H;
+    UNIVERSE_H = 8e7;
+    UNIVERSE_W = UNIVERSE_H * UNIVERSE_RATIO;
+    SCALE_X = (DISPLAY_W / UNIVERSE_W);
+    SCALE_Y = (DISPLAY_H / UNIVERSE_H);
+
     display = al_create_display (DISPLAY_W, DISPLAY_H);
     if (!display) {
         fprintf (stderr, "Falha ao criar janela.\n");

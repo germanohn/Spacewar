@@ -3,8 +3,6 @@
 #include "simulation.h"
 #define MAX_PROJECTILES 20
 
-int NUM_PROJECTILES;
-
 void applyForces (Body *body1, Body *body2) {
     if (body1 == NULL || body2 == NULL) return;
 
