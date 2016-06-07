@@ -38,7 +38,13 @@ int main (int argc, char **argv) {
     Celula *head  = createCelula (NULL, NULL);
 
     initObjects (&planet, &player1, &player2);
-    if (planet == NULL || player1 == NULL || player2 == NULL || drawInit () == -1) return -1;
+
+    if (planet == NULL || player1 == NULL || player2 == NULL)
+      return -1;
+
+    if (drawInit () == -1)
+      return -1;
+
     drawScene (dt, player1, player2, head, planet);
 
     destroyBody (planet);
