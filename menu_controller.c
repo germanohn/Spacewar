@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include "allegro.h"
 #include "menu_controller.h"
 
@@ -38,7 +39,7 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                     break;
                 case ALLEGRO_KEY_DOWN:
                     cursor--;
-                    cursor = cursor % 2;
+                    cursor = abs (cursor) % 2;
                     redraw = 1;
                     break;
                 case ALLEGRO_KEY_ENTER:

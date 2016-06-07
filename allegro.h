@@ -31,4 +31,6 @@ ALLEGRO_SAMPLE *background_sound;
 /* Inicializador do allegro. Retorna 0 se inicializou, qualquer coisa do contrário. */
 int allegroInit ();
 
+void allegroDestroy ();
+
 #endif

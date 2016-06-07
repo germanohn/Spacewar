@@ -8,10 +8,10 @@ else
     CC = gcc-5
 endif
 
-Spacewar: main.o body.o ship.o vector.o projectile.o draw.o simulation.o
+Spacewar: main.o body.o ship.o vector.o projectile.o simulation.o allegro.o menu_controller.o game_controller.o
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
-main.o: main.c body.h ship.h projectile.h draw.h vector.h
+main.o: main.c body.h ship.h projectile.h allegro.h vector.h
 
 simulation.o: simulation.c body.h vector.h ship.h projectile.h
 
@@ -23,7 +23,11 @@ vector.o: vector.c vector.h
 
 projectile.o: projectile.c projectile.h body.h
 
-draw.o: draw.c simulation.h draw.h
+allegro.o: allegro.c simulation.h allegro.h
+
+menu_controller.o: menu_controller.c allegro.h menu_controller.h
+
+game_controller.o: game_controller.c allegro.h menu_controller.h game_controller.h
 
 play: Spacewar
 	./Spacewar 60

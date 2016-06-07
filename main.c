@@ -16,7 +16,8 @@
 #include "vector.h"
 #include "ship.h"
 #include "projectile.h"
-#include "draw.h"
+#include "allegro.h"
+#include "menu_controller.h"
 
 #define DEBUG 0
 
@@ -42,10 +43,11 @@ int main (int argc, char **argv) {
     if (planet == NULL || player1 == NULL || player2 == NULL)
       return -1;
 
-    if (drawInit () == -1)
+    if (allegroInit () == -1 || menuControllerInit ())
       return -1;
+    
+    menuControllerDraw (dt, player1, player2, head, planet);
 
-    drawScene (dt, player1, player2, head, planet);
 
     destroyBody (planet);
     destroyShip (player1);
