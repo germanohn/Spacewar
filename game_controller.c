@@ -174,7 +174,7 @@ static void draw (Ship *player1, Ship *player2, Celula *head, Body *planet) {
     }
 }
 
-void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
+void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
     /* Indica quando a imagem seve ser refeita */
     int redraw = 1;
 
