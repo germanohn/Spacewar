@@ -6,7 +6,6 @@ ALLEGRO_EVENT_QUEUE *event_queue;
 int cursor;
 
 int menuControllerInit () {
-  printf("Frescou 2\n");
     event_queue = al_create_event_queue ();
     if (!event_queue) {
         fprintf (stderr, "Falha ao criar fila de eventos.\n");
@@ -15,18 +14,19 @@ int menuControllerInit () {
     }
     cursor = 0;
 
-    printf("Frescou 1\n");
 
     return 0;
 }
 
+void menuControllerDestroy () {
+    al_destroy_event_queue (event_queue);
+}
+
 void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
     int redraw = 1;
-    int initialDraw = 1;
 
     al_register_event_source (event_queue, al_get_display_event_source (display));
     al_register_event_source (event_queue, al_get_keyboard_event_source ());
-    al_clear_to_color (al_map_rgb (0, 0, 0));
     al_flip_display ();
 
     while (true) {
@@ -35,7 +35,7 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
         } else if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-           switch (event.keyboard.keycode) {
+            switch (event.keyboard.keycode) {
                 case ALLEGRO_KEY_UP:
                     cursor++;
                     cursor = cursor % 2;
@@ -46,19 +46,20 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                     cursor = abs (cursor) % 2;
                     redraw = 1;
                     break;
-                case ALLEGRO_KEY_ENTER:
-                    if (gameControllerInit (dt) != -1)
-                        gameControllerDraw (dt, player1, player2, head, planet);
-                    redraw = 1;
-                    break;
                 default:
                     break;
-
-           }
+            }
+        } if (event.type == ALLEGRO_EVENT_KEY_DOWN && event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+            if (cursor == 0) {
+                if (gameControllerInit (dt) != -1)
+                    gameControllerDraw (dt, player1, player2, head, planet);
+                redraw = 1;
+            }
+            else 
+                break;
         }
-        if (initialDraw || (redraw && al_is_event_queue_empty (event_queue))) {
+        if (redraw && al_is_event_queue_empty (event_queue)) {
             redraw = 0;
-            initialDraw = 0;
             /* Agora construímos a próxima imagem a ser exibida */
             al_clear_to_color (al_map_rgb (0, 0, 0));
             al_draw_bitmap (background_image, 0, 0 , 0);
@@ -71,6 +72,8 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
 
             al_flip_display ();
         }
-
     }
+
+    menuControllerDestroy ();
 }
+
