@@ -9,8 +9,8 @@
 /**                                                           **/
 /***************************************************************/
 
-#ifndef __DRAW_H__
-#define __DRAW_H__
+#ifndef __GAME_H__
+#define __GAME_H__
 
 #include "body.h"
 #include "vector.h"
@@ -20,9 +20,9 @@
 
 /* Inicializador do draw. Nessa função inicializamos todos os elementos da cena 
 (objetos e background) e os objetos da allegro: display, event_queue, keyboard. */
-int drawInit ();
+int gameControllerInit ();
 
 /* Função que controla a dinâmica da cena durante a simulação */
-void drawScene (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet);
+void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet);
 
 #endif
