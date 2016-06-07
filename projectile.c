@@ -31,12 +31,13 @@ void destroyAllCelulas (Celula *cel) {
 }
 
 // Cria um objeto Projectile
-Projectile* createProjectile (double duration, double weight, double x, double y, double vx, double vy) {
+Projectile* createProjectile (double duration, double weight, double x, double y, double vx, double vy, int playerID) {
     Projectile* projectile = malloc (sizeof (Projectile));
 
     if (projectile != NULL) {
         projectile->duration = duration;
         projectile->body = createBody (8e5, weight, x, y, vx, vy);
+        projectile->playerIdentifier = playerID;
     }
 
     return projectile;

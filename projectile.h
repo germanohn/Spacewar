@@ -17,11 +17,12 @@
 /* Struct do vetor */
 typedef struct projectile_struct {
     double duration;
+    int playerIdentifier;
     Body *body;
 } Projectile;
 
 /* construtor e descontrutor do vetor */
-Projectile* createProjectile (double duration, double weight, double x, double y, double vx, double vy);
+Projectile* createProjectile (double duration, double weight, double x, double y, double vx, double vy, int playerID);
 void destroyProjectile (Projectile *projectile);
 
 typedef struct celula_struct {

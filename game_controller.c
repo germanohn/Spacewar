@@ -208,7 +208,7 @@ static void draw (Ship *player1, Ship *player2, Celula *head, Body *planet) {
 
     Celula *aux = head->next;
     while (aux != NULL) {
-        drawBody (projectile_im, aux->proj->body);
+        drawBody (aux->proj->playerIdentifier == 1 ? projectile_im : projectile_green_im, aux->proj->body);
         aux = aux->next;
     }
 }
@@ -355,7 +355,7 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                         break;
                 }
                 al_flip_display ();
-                al_rest (3.2); 
+                al_rest (3.2);
                 break;
             }
         }
