@@ -191,7 +191,6 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         if (event.type == ALLEGRO_EVENT_TIMER) {
             /* Indica quando a imagem deve ser redesenhada */
             redraw = 1;
-            printf("asdasddas\n");
 
         } else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             /* Permite que feche a tela da imagem, mas termine de executar o programa,

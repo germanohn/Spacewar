@@ -21,7 +21,7 @@
 #include <allegro5/allegro_ttf.h>
 #include "simulation.h"
 
-#define DISPLAY_H 800
+#define DISPLAY_H 700
 #define DISPLAY_W (DISPLAY_H * UNIVERSE_RATIO)
 #define SCALE_X (DISPLAY_W / UNIVERSE_W)
 #define SCALE_Y (DISPLAY_H / UNIVERSE_H)

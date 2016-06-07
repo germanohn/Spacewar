@@ -73,8 +73,6 @@ int allegroInit () {
         return -1;
     }
 
-    printf("Frescou 3\n");
-
     return 0;
 }
 
