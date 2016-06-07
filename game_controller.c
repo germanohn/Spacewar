@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
-#include "draw.h"
+#include "game_controller.h"
 
 ALLEGRO_BITMAP *planet_im;
 ALLEGRO_BITMAP *player1_im;
@@ -112,7 +112,6 @@ void gameControllerDestroy () {
     al_destroy_bitmap (player1_im);
     al_destroy_bitmap (player2_im);
     al_destroy_bitmap (projectile_im);
-    al_destroy_bitmap (background);
     al_destroy_bitmap (heart);
 }
 
@@ -154,7 +153,7 @@ static void drawLifes (Ship *player, int dx, int dy, int kind) {
 /* função que encapsula a draw e faz todos os objetos serem impressos na tela */
 static void draw (Ship *player1, Ship *player2, Celula *head, Body *planet) {
     /* Desenho do fundo de tela */
-    al_draw_bitmap (background, 0, 0, 0);
+    al_draw_bitmap (background_image, 0, 0, 0);
 
     /* Desenho dos objetos do jogo */
     drawBody (player1_im, player1->body);

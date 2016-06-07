@@ -3,8 +3,7 @@
 #include "menu_controller.h"
 
 ALLEGRO_EVENT_QUEUE *event_queue;
-ALLEGRO_COLOR white = al_map_rgb (0, 0, 0);
-int cursor = 0;
+int cursor;
 
 int menuControllerInit () {
     event_queue = al_create_event_queue ();
@@ -13,6 +12,8 @@ int menuControllerInit () {
         allegroDestroy ();
         return -1;
     }
+    cursor = 0;
+    return 0;
 }
 
 void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, Body *planet) {
@@ -26,10 +27,10 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     while (true) { 
         ALLEGRO_EVENT event;
         al_wait_for_event (event_queue, &event);
-        if (event.type == ALLEGRO_EVENT_DIPLAY_CLOSE) {
-            break;
-        }
-        else if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+//        if (event.type == ALLEGRO_EVENT_DIPLAY_CLOSE) {
+ //           break;
+   //     }
+        if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
            switch (event.keyboard.keycode) {
                 case ALLEGRO_KEY_UP:
                     cursor++;
@@ -43,7 +44,7 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                     break;
                 case ALLEGRO_KEY_ENTER:
                     if (gameControllerInit () != -1)
-                        gameControllerDraw (dt, *player1, *player2, *head, *planet);
+                        gameControllerDraw (dt, player1, player2, head, planet);
                     redraw = 1;
                     
            }
@@ -51,14 +52,14 @@ void menuControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         if (redraw && al_is_event_queue_empty (event_queue)) {
             redraw = 0;
             /* Agora construímos a próxima imagem a ser exibida */
-            al_clear_to_color (white);
+            al_clear_to_color (al_map_rgb (0, 0, 0));
             al_draw_bitmap (background_image, 0, 0 , 0);
-            al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "Novo Jogo");
-            al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "Sair");
+            al_draw_text (mainFont, al_map_rgb (0, 0, 0), DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "Novo Jogo");
+            al_draw_text (mainFont, al_map_rgb (0, 0, 0), DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "Sair");
             if (cursor == 0) 
-                al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "->");
+                al_draw_text (mainFont, al_map_rgb (0, 0, 0), DISPLAY_W / 2, DISPLAY_H * 0.45, 0, "->");
             else 
-                al_draw_text (mainFont, white, DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "->");
+                al_draw_text (mainFont, al_map_rgb (0, 0, 0), DISPLAY_W / 2, DISPLAY_H * 0.55, 0, "->");
 
             al_flip_display ();
         }
