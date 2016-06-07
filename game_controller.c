@@ -7,12 +7,14 @@ ALLEGRO_BITMAP *planet_im;
 ALLEGRO_BITMAP *player1_im;
 ALLEGRO_BITMAP *player2_im;
 ALLEGRO_BITMAP *projectile_im;
+ALLEGRO_BITMAP *projectile_green_im;
 ALLEGRO_BITMAP *heart;
 ALLEGRO_TIMER *timer;
+ALLEGRO_SAMPLE *laser_sound;
 static ALLEGRO_EVENT_QUEUE *gameEventQueue;
 
-int keys_1[4] = {false, false, false, false};
-int keys_2[4] = {false, false, false, false};
+int keys_1[4];
+int keys_2[4];
 
 int gameControllerInit (double dt) {
     /* Cria fila em que colocamos todos os eventos que vão servir como fonte
@@ -71,6 +73,18 @@ int gameControllerInit (double dt) {
         return -1;
     }
 
+    projectile_green_im = al_load_bitmap ("images/projectile-green.png");
+    if (!projectile_im) {
+        fprintf (stderr, "Falha ao iniciar a imagem dos Projeteis (verde)\n");
+        al_destroy_display (display);
+        al_destroy_event_queue (gameEventQueue);
+        al_destroy_bitmap (planet_im);
+        al_destroy_bitmap (player1_im);
+        al_destroy_bitmap (player2_im);
+        al_destroy_bitmap (projectile_im);
+        return -1;
+    }
+
     timer = al_create_timer (1.0 / dt);
     if (!timer) {
         fprintf (stderr, "Erro ao inicalizar timer\n");
@@ -80,6 +94,7 @@ int gameControllerInit (double dt) {
         al_destroy_bitmap (player1_im);
         al_destroy_bitmap (player2_im);
         al_destroy_bitmap (projectile_im);
+        al_destroy_bitmap (projectile_green_im);
 
         return -1;
     }
@@ -94,6 +109,26 @@ int gameControllerInit (double dt) {
         al_destroy_bitmap (player1_im);
         al_destroy_bitmap (player2_im);
         al_destroy_bitmap (projectile_im);
+        al_destroy_bitmap (projectile_green_im);
+        al_destroy_timer (timer);
+
+        return -1;
+    }
+
+    laser_sound = al_load_sample ("audios/laser-blaster.wav");
+    if (!laser_sound) {
+        fprintf(stderr, "Falha ao carregar 'audios/laser-blaster.wav'.\n");
+        al_destroy_display (display);
+        al_destroy_event_queue (gameEventQueue);
+        al_destroy_bitmap (planet_im);
+        al_destroy_bitmap (player1_im);
+        al_destroy_bitmap (player2_im);
+        al_destroy_bitmap (projectile_im);
+        al_destroy_bitmap (projectile_green_im);
+        al_destroy_timer (timer);
+        al_destroy_bitmap (heart);
+
+        return -1;
     }
 
     /* Popula as fontes do event queue */
@@ -113,6 +148,12 @@ void gameControllerDestroy () {
     al_destroy_bitmap (player2_im);
     al_destroy_bitmap (projectile_im);
     al_destroy_bitmap (heart);
+    al_destroy_sample (laser_sound);
+}
+
+/* Callback de quando um projectile é adicionado */
+void gameControllerProjectileAdded () {
+  al_play_sample (laser_sound, 0.3, 0.0, 1.4, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 /* Função que imprime na tela a imagem correspondente ao objeto recebido */
@@ -182,6 +223,9 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_flip_display ();
     al_start_timer (timer);
+
+    keys_1[0] = keys_1[1] = keys_1[2] = keys_1[3] = false;
+    keys_2[0] = keys_2[1] = keys_2[2] = keys_2[3] = false;
 
     while (true) {
         ALLEGRO_EVENT event;
@@ -284,8 +328,8 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
 
             /* Função que altera o elementos de cada nave (aceleração, ângulo)
             e cria projéteis, se as teclas correspondentes estiverem ativadas. */
-            updateKeys (keys_1, player1, head);
-            updateKeys (keys_2, player2, head);
+            updateKeys (keys_1, player1, head, 1);
+            updateKeys (keys_2, player2, head, 2);
 
             /* Função que computa as novas posições de cada objeto de acordo
             com atributos atualizados pela updateKeys (velocidade e ângulo em
@@ -296,8 +340,24 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
             draw (player1, player2, head, planet);
             al_flip_display ();
 
-            if (endGame)
+            if (endGame) {
+                switch (endGame) {
+                    case 1:
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.2, ALLEGRO_ALIGN_CENTRE, "Player 1 venceu");
+                        break;
+                    case 2:
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.2, ALLEGRO_ALIGN_CENTRE, "Player 2 venceu");
+                        break;
+                    case 3:
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.2, ALLEGRO_ALIGN_CENTRE, "Empate");
+                        break;
+                    default:
+                        break;
+                }
+                al_flip_display ();
+                al_rest (3.5); 
                 break;
+            }
         }
     }
 }
