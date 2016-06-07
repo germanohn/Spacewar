@@ -33,8 +33,8 @@ void menuControllerDestroy () {
 void menuControllerDraw (double dt) {
     int redraw = 1;
 
-    ALLEGRO_COLOR selected_color = al_map_rgb (145, 145, 145);
-    ALLEGRO_COLOR unselected_color = al_map_rgb (255, 255, 255);
+    ALLEGRO_COLOR selected_color = al_map_rgb (255, 255, 255);
+    ALLEGRO_COLOR unselected_color = al_map_rgb (145, 145, 145);
 
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_draw_bitmap (background_image, 0, 0, 0);
