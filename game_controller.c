@@ -321,20 +321,19 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
             if (endGame) {
                 switch (endGame) {
                     case 1:
-                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.25, ALLEGRO_ALIGN_CENTRE, "Player 1 venceu");
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.2, ALLEGRO_ALIGN_CENTRE, "Player 1 venceu");
                         break;
                     case 2:
-                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.25, ALLEGRO_ALIGN_CENTRE, "Player 2 venceu");
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.2, ALLEGRO_ALIGN_CENTRE, "Player 2 venceu");
                         break;
                     case 3:
-                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.25, ALLEGRO_ALIGN_CENTRE, "Empate");
+                        al_draw_text (mainFont, al_map_rgb (255, 255, 255), DISPLAY_W / 2, DISPLAY_H * 0.2, ALLEGRO_ALIGN_CENTRE, "Empate");
                         break;
                     default:
                         break;
                 }
                 al_flip_display ();
-                al_rest(4.0); 
-                
+                al_rest (3.5); 
                 break;
             }
         }
