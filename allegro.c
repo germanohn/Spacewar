@@ -12,10 +12,7 @@ int allegroInit () {
         return -1;
     }
 
-    //if (!al_init_font_addon ()) {
-        //fprintf (stderr, "Falha ao inicializar add-on allegro_font.\n");
-        //return -1;
-    //}
+    al_init_font_addon ();
 
     if (!al_init_ttf_addon ()) {
         fprintf (stderr, "Falha ao inicializar add-on allegro_ttf.\n");
@@ -75,6 +72,8 @@ int allegroInit () {
         al_destroy_sample (background_sound);
         return -1;
     }
+
+    printf("Frescou 3\n");
 
     return 0;
 }

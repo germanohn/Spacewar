@@ -95,10 +95,12 @@ int gameControllerInit (double dt) {
         al_destroy_bitmap (player2_im);
         al_destroy_bitmap (projectile_im);
     }
+    
     /* Popula as fontes do event queue */
     al_register_event_source (event_queue, al_get_display_event_source (display));
     al_register_event_source (event_queue, al_get_timer_event_source (timer));
     al_register_event_source (event_queue, al_get_keyboard_event_source ());
+    al_start_timer (timer);
 
     return 0;
 }
@@ -137,17 +139,17 @@ static void drawLifes (Ship *player, int dx, int dy, int kind) {
     for (int i = 0; i < player->body->qtdLives; i++) {
         //dx = body->position->x * SCALE_X + DISPLAY_W / 2.0;
         //dy = body->position->y * SCALE_Y + DISPLAY_H / 2.0;
-        
+
         pw = al_get_bitmap_width (heart);
         ph = al_get_bitmap_height (heart);
-        
+
         al_draw_scaled_bitmap (heart, 0, 0, pw, ph, dx, dy, pw/45, ph/45, 0);
         //dx += kind ? 10 : -10;
         if (kind)
             dx += 28;
-        else 
+        else
             dx -= 28;
-    } 
+    }
 }
 
 /* função que encapsula a draw e faz todos os objetos serem impressos na tela */
@@ -183,7 +185,6 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     e teclado */
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_flip_display ();
-    al_start_timer (timer);
 
     while (true) {
         ALLEGRO_EVENT event;
@@ -192,6 +193,7 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         if (event.type == ALLEGRO_EVENT_TIMER) {
             /* Indica quando a imagem deve ser redesenhada */
             redraw = 1;
+            printf("asdasddas\n");
 
         } else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             /* Permite que feche a tela da imagem, mas termine de executar o programa,
@@ -278,6 +280,8 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
         indicou que é o momento de redesenhar, e se não tiver um evento na event_queue. */
         if (redraw && al_is_event_queue_empty (event_queue)) {
             redraw = 0;
+
+            printf ("Olar\n");
 
             /* Agora construímos a próxima imagem a ser exibida */
             al_clear_to_color (al_map_rgb (0, 0, 0));
