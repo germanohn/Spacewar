@@ -83,7 +83,7 @@ int allegroInit () {
         return -1;
     }
 
-    background_sound = al_load_sample ("audios/sw-background.wav");
+    background_sound = al_load_sample ("audios/Searching.wav");
     if (!background_sound) {
         fprintf(stderr, "Falha ao carregar 'audios/sw-background.wav'.\n");
         al_destroy_display (display);
@@ -99,6 +99,7 @@ void allegroDestroy () {
     al_destroy_display (display);
     al_destroy_bitmap (background_image);
     al_destroy_font (mainFont);
+    al_destroy_sample (background_sound);
     al_shutdown_font_addon ();
     al_shutdown_ttf_addon ();
 }
