@@ -20,7 +20,7 @@ int menuControllerInit () {
     }
     al_register_event_source (menuEventQueue, al_get_display_event_source (display));
     al_register_event_source (menuEventQueue, al_get_keyboard_event_source ());
-    al_play_sample(background_sound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+    al_play_sample (background_sound, 0.3, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     cursor = 0;
 

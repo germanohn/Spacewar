@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
 #include "game_controller.h"
 
 ALLEGRO_BITMAP *planet_im;
@@ -229,6 +227,26 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
     keys_1[0] = keys_1[1] = keys_1[2] = keys_1[3] = false;
     keys_2[0] = keys_2[1] = keys_2[2] = keys_2[3] = false;
 
+    ALLEGRO_FONT *countFont = al_load_ttf_font ("fonts/Starjedi.ttf", 280, 0);
+    if (!countFont) {
+        fprintf(stderr, "Falha ao carregar 'fonts/Starjedi.ttf'.\n");
+        return;
+    }
+
+    for (int i = 0; i < 3; i++) {
+        al_clear_to_color (al_map_rgb (0, 0, 0));
+        draw (player1, player2, head, planet);
+        if (i == 0) 
+            al_draw_text (countFont, al_map_rgb (103, 103, 103), DISPLAY_W * 0.5, DISPLAY_H * 0.20, ALLEGRO_ALIGN_CENTRE, "3");
+        else if (i == 1)
+            al_draw_text (countFont, al_map_rgb (180, 180, 180), DISPLAY_W * 0.5, DISPLAY_H * 0.20, ALLEGRO_ALIGN_CENTRE,  "2");
+        else 
+            al_draw_text (countFont, al_map_rgb (250, 250, 250), DISPLAY_W * 0.5, DISPLAY_H * 0.20, ALLEGRO_ALIGN_CENTRE, "1");
+        al_flip_display ();
+        al_rest (1);
+    }
+    al_destroy_font (countFont);
+
     while (true) {
         ALLEGRO_EVENT event;
         al_wait_for_event (gameEventQueue, &event);
@@ -278,10 +296,12 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                 case ALLEGRO_KEY_RIGHT:
                     keys_2[KEY_RIGHT] = true;
                     break;
-
                 default:
                     break;
             }
+            // Para fechar o jogo in-game
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) 
+                break;
         }
         /* Evento que indica que uma tecla do teclado foi despressionada. Então, a flag
         correspondente a tecla despressionada é desativada para o player1, ou para o player2
