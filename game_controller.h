@@ -17,6 +17,7 @@
 #include "ship.h"
 #include "projectile.h"
 #include "simulation.h"
+#include "allegro.h"
 
 /* Inicializador do draw. Nessa função inicializamos todos os elementos da cena
 (objetos e background) e os objetos da allegro: display, event_queue, keyboard. */
