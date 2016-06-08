@@ -6,6 +6,7 @@
 #include "ship.h"
 #include "projectile.h"
 #include "allegro.h"
+#include "game_controller.h"
 
 int NUM_PROJECTILES;
 

@@ -278,10 +278,12 @@ void gameControllerDraw (double dt, Ship *player1, Ship *player2, Celula *head, 
                 case ALLEGRO_KEY_RIGHT:
                     keys_2[KEY_RIGHT] = true;
                     break;
-
                 default:
                     break;
             }
+            // Para fechar o jogo in-game
+            if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) 
+                break;
         }
         /* Evento que indica que uma tecla do teclado foi despressionada. Então, a flag
         correspondente a tecla despressionada é desativada para o player1, ou para o player2
