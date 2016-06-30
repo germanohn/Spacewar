@@ -3,6 +3,7 @@
 #include "menu_controller.h"
 
 static ALLEGRO_EVENT_QUEUE *menuEventQueue;
+static ALLEGRO_BITMAP *logo;
 int cursor;
 
 void initObjects (Body **planet, Ship **player1, Ship **player2) {
@@ -18,6 +19,13 @@ int menuControllerInit () {
         allegroDestroy ();
         return -1;
     }
+    logo = al_load_bitmap ("./images/logo.png");
+    if (!logo) {
+        fprintf (stderr, "Falha ao carregar 'images/logo.jpg'.\n");
+        al_destroy_event_queue (menuEventQueue);
+        allegroDestroy ();
+        return -1;
+    }
     al_register_event_source (menuEventQueue, al_get_display_event_source (display));
     al_register_event_source (menuEventQueue, al_get_keyboard_event_source ());
     al_play_sample (background_sound, 0.3, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
@@ -29,6 +37,7 @@ int menuControllerInit () {
 
 void menuControllerDestroy () {
     al_destroy_event_queue (menuEventQueue);
+    al_destroy_bitmap (logo);
 }
 
 void menuControllerDraw (double dt) {
@@ -39,6 +48,9 @@ void menuControllerDraw (double dt) {
 
     al_clear_to_color (al_map_rgb (0, 0, 0));
     al_draw_bitmap (background_image, 0, 0, 0);
+    double logoH = al_get_bitmap_height (logo);
+    double logoW = al_get_bitmap_width (logo);
+    al_draw_scaled_bitmap (logo, 0, 0, logoW, logoH, DISPLAY_W * 0.4, DISPLAY_H * 0.1, logoW / 2, logoH / 2, 0);
     al_draw_text (mainFont, cursor == 0 ? selected_color : unselected_color, DISPLAY_W / 2, DISPLAY_H * 0.45, ALLEGRO_ALIGN_CENTRE, "Novo Jogo");
     al_draw_text (mainFont, cursor == 1 ? selected_color : unselected_color, DISPLAY_W / 2, DISPLAY_H * 0.55, ALLEGRO_ALIGN_CENTRE, "Sair");
     al_flip_display ();
@@ -93,6 +105,7 @@ void menuControllerDraw (double dt) {
             /* Agora construímos a próxima imagem a ser exibida */
             al_clear_to_color (al_map_rgb (0, 0, 0));
             al_draw_bitmap (background_image, 0, 0, 0);
+            al_draw_scaled_bitmap (logo, 0, 0, logoW, logoH, DISPLAY_W * 0.4, DISPLAY_H * 0.1, logoW / 2, logoH / 2, 0);
             al_draw_text (mainFont, cursor == 0 ? selected_color : unselected_color, DISPLAY_W / 2, DISPLAY_H * 0.45, ALLEGRO_ALIGN_CENTRE, "Novo Jogo");
             al_draw_text (mainFont, cursor == 1 ? selected_color : unselected_color, DISPLAY_W / 2, DISPLAY_H * 0.55, ALLEGRO_ALIGN_CENTRE, "Sair");
             al_flip_display ();
