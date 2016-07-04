@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 
-\title{Relatório - Fase II}
+\title{Relatório Final}
 \author{
     Germano Huning Neuenfeld 9298340
     \\
@@ -130,11 +130,17 @@ Para usar o Valgrind:
 \\
 \indent $>\,valgrind\,--leak-check=yes\,--track-origins=yes\,./Spacewar\,50000$
 
-\section{Considerações Finais}
-Em geral, achamos a Allegro uma implementação boa e eficiente da parte gráfica, porém ao rodar o Valgrind tivemos alguns problemas de vazamento de memória referentes a
-funções desta biblioteca que não é possível arrumar. \\
-\\
-Para essa fase retiramos a entrada de informações pela entrada padrão, as informações necessárias atribuímos no próprio código (hardcoded).
-\\
-Fizemos uma mudança na tecla que fazem as nave atirarem, a da nave controlada pelas teclas WAD é: "TAB"; e a da nave controlada pelas setas é: ",".
+
+\section{Como jogar}
+Cada jogador possuí 3 vidas. Ao ser atingido por um projétil, o jogador perde uma vida. Caso a nave colida com o planeta, o jogador perde todas as vidas.
+Em casa de colisão entre dois jogadores, há empate.\\\\
+Comandos para o player 1: W (acelera), A (gira no sentido anti-horário), D (gira no sentido horário) e TAB (atira).\\\\
+Comandos para o player 2: seta para CIMA (acelera), seta para ESQUERDA (gira no sentido anti-horário), seta para DIREITA (gira no sentido horário) e VIRGULA (atira).\\\\
+Utilize a tecla ESC para voltar ao menu inicial.
+
+\section{Polimento}
+No polimento, fizemos uma melhoria de usabilidade inserindo um menu inicial para começar um novo jogo ou para sair do jogo e também portamos o jogo para ser exibido em tela cheia.\\\\
+Em termos de jogabilidade, inserimos uma música de fundo para dar um pouco de emoção e também limitamos o número máximo de projéteis no espaço.\\\\
+Fizemos testes para acertar as constantes (como o peso do planeta e dos jogadores) de modo a tornar o jogo mais desafiador e interessante.
+
 \end{document}
